@@ -1,7 +1,36 @@
 import { motion } from "motion/react";
 import { Mail, Phone, Send, Instagram, Github, Linkedin, MessageCircle, Terminal } from "lucide-react";
+import { useState } from "react";
 
 export function Contact() {
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("submitting");
+    setErrorMessage("");
+
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
+      const response = await fetch(`${apiUrl}/api/send-email`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) throw new Error("Falha na comunicação com o servidor SMTP.");
+      
+      setStatus("success");
+      setFormData({ name: "", email: "", message: "" });
+    } catch (error) {
+      console.error(error);
+      setStatus("error");
+      setErrorMessage("Erro ao processar o payload. Verifique a conexão com o servidor de e-mail.");
+    }
+  };
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -117,51 +146,89 @@ export function Contact() {
               Transmitir <span className="text-[#00E5FF]">Mensagem</span>
             </h3>
             
-            <form className="relative space-y-6">
-              <div className="space-y-2">
-                <label htmlFor="name" className="text-xs font-mono font-semibold uppercase tracking-widest text-[#8B949E] flex items-center gap-2">
-                  <span className="text-[#00E5FF]">&gt;</span> Identificação
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  placeholder="Nome corporativo ou pessoal"
-                  className="w-full bg-[#02040A]/50 border border-[#00E5FF]/20 rounded-xl px-5 py-4 text-white placeholder:text-[#6E7681] focus:outline-none focus:border-[#00E5FF]/80 focus:ring-1 focus:ring-[#00E5FF]/50 transition-all duration-300 focus:bg-[#02040A]"
-                />
+            {status === "success" ? (
+              <div className="flex flex-col items-center justify-center h-64 text-center">
+                <div className="w-16 h-16 rounded-full bg-[#00E5FF]/20 flex items-center justify-center text-[#00E5FF] mb-4">
+                  <Send className="w-8 h-8" />
+                </div>
+                <h4 className="text-xl font-bold text-white mb-2">Mensagem Transmitida</h4>
+                <p className="text-[#8B949E] text-sm mb-6">Em breve retornaremos o contato.</p>
+                <button 
+                  onClick={() => setStatus("idle")}
+                  className="text-[#00E5FF] font-mono text-sm underline hover:text-white transition-colors"
+                >
+                  Enviar nova mensagem
+                </button>
               </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="relative space-y-6">
+                <div className="space-y-2">
+                  <label htmlFor="name" className="text-xs font-mono font-semibold uppercase tracking-widest text-[#8B949E] flex items-center gap-2">
+                    <span className="text-[#00E5FF]">&gt;</span> Identificação
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    required
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    placeholder="Nome corporativo ou pessoal"
+                    className="w-full bg-[#02040A]/50 border border-[#00E5FF]/20 rounded-xl px-5 py-4 text-white placeholder:text-[#6E7681] focus:outline-none focus:border-[#00E5FF]/80 focus:ring-1 focus:ring-[#00E5FF]/50 transition-all duration-300 focus:bg-[#02040A]"
+                  />
+                </div>
 
-              <div className="space-y-2">
-                <label htmlFor="email" className="text-xs font-mono font-semibold uppercase tracking-widest text-[#8B949E] flex items-center gap-2">
-                  <span className="text-[#00E5FF]">&gt;</span> Endereço Eletrônico
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  placeholder="seu@email.com"
-                  className="w-full bg-[#02040A]/50 border border-[#00E5FF]/20 rounded-xl px-5 py-4 text-white placeholder:text-[#6E7681] focus:outline-none focus:border-[#00E5FF]/80 focus:ring-1 focus:ring-[#00E5FF]/50 transition-all duration-300 focus:bg-[#02040A]"
-                />
-              </div>
+                <div className="space-y-2">
+                  <label htmlFor="email" className="text-xs font-mono font-semibold uppercase tracking-widest text-[#8B949E] flex items-center gap-2">
+                    <span className="text-[#00E5FF]">&gt;</span> Endereço Eletrônico
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    placeholder="seu@email.com"
+                    className="w-full bg-[#02040A]/50 border border-[#00E5FF]/20 rounded-xl px-5 py-4 text-white placeholder:text-[#6E7681] focus:outline-none focus:border-[#00E5FF]/80 focus:ring-1 focus:ring-[#00E5FF]/50 transition-all duration-300 focus:bg-[#02040A]"
+                  />
+                </div>
 
-              <div className="space-y-2">
-                <label htmlFor="message" className="text-xs font-mono font-semibold uppercase tracking-widest text-[#8B949E] flex items-center gap-2">
-                  <span className="text-[#00E5FF]">&gt;</span> Payload (Mensagem)
-                </label>
-                <textarea
-                  id="message"
-                  rows={4}
-                  placeholder="Descreva a arquitetura do seu projeto ou assunto a ser discutido..."
-                  className="w-full bg-[#02040A]/50 border border-[#00E5FF]/20 rounded-xl px-5 py-4 text-white placeholder:text-[#6E7681] focus:outline-none focus:border-[#00E5FF]/80 focus:ring-1 focus:ring-[#00E5FF]/50 transition-all duration-300 resize-none focus:bg-[#02040A]"
-                />
-              </div>
+                <div className="space-y-2">
+                  <label htmlFor="message" className="text-xs font-mono font-semibold uppercase tracking-widest text-[#8B949E] flex items-center gap-2">
+                    <span className="text-[#00E5FF]">&gt;</span> Payload (Mensagem)
+                  </label>
+                  <textarea
+                    id="message"
+                    required
+                    rows={4}
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    placeholder="Descreva a arquitetura do seu projeto ou assunto a ser discutido..."
+                    className="w-full bg-[#02040A]/50 border border-[#00E5FF]/20 rounded-xl px-5 py-4 text-white placeholder:text-[#6E7681] focus:outline-none focus:border-[#00E5FF]/80 focus:ring-1 focus:ring-[#00E5FF]/50 transition-all duration-300 resize-none focus:bg-[#02040A]"
+                  />
+                </div>
 
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-[#00E5FF] to-blue-500 hover:from-white hover:to-white text-[#02040A] font-black uppercase tracking-widest py-4 rounded-xl transition-all duration-500 flex items-center justify-center gap-3 hover:shadow-[0_0_30px_rgba(0,229,255,0.4)] transform hover:-translate-y-1"
-              >
-                <Send className="w-5 h-5" />
-                Enviar Solicitação
-              </button>
-            </form>
+                {status === "error" && (
+                  <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-sm">
+                    {errorMessage}
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={status === "submitting"}
+                  className="w-full bg-gradient-to-r from-[#00E5FF] to-blue-500 hover:from-white hover:to-white text-[#02040A] font-black uppercase tracking-widest py-4 rounded-xl transition-all duration-500 flex items-center justify-center gap-3 hover:shadow-[0_0_30px_rgba(0,229,255,0.4)] transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                >
+                  {status === "submitting" ? (
+                    <span className="animate-pulse">Transmitindo...</span>
+                  ) : (
+                    <>
+                      <Send className="w-5 h-5" />
+                      Enviar Solicitação
+                    </>
+                  )}
+                </button>
+              </form>
+            )}
           </motion.div>
         </motion.div>
       </div>

@@ -3,15 +3,38 @@ import { Send, TerminalSquare, Briefcase, Code, ChevronRight } from "lucide-reac
 import { useState } from "react";
 
 export function RequestPage() {
-  const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success">("idle");
+  const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    service: "",
+    budget: "",
+    message: ""
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormStatus("submitting");
-    // Simulate API call
-    setTimeout(() => {
+    setErrorMessage("");
+
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
+      const response = await fetch(`${apiUrl}/api/send-email`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) throw new Error("Falha na comunicação com o servidor SMTP.");
+      
       setFormStatus("success");
-    }, 1500);
+      setFormData({ name: "", email: "", service: "", budget: "", message: "" });
+    } catch (error) {
+      console.error(error);
+      setFormStatus("error");
+      setErrorMessage("Erro ao enviar sua requisição. Verifique a conexão do servidor de backend.");
+    }
   };
 
   return (
@@ -76,6 +99,8 @@ export function RequestPage() {
                       type="text"
                       id="name"
                       required
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       className="w-full bg-[#02040A]/50 border border-[#00E5FF]/20 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-[#00E5FF]/80 focus:ring-1 focus:ring-[#00E5FF]/50 transition-all duration-300 focus:bg-[#02040A]"
                       placeholder="Nome completo ou Razão Social"
                     />
@@ -88,6 +113,8 @@ export function RequestPage() {
                       type="email"
                       id="email"
                       required
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       className="w-full bg-[#02040A]/50 border border-[#00E5FF]/20 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-[#00E5FF]/80 focus:ring-1 focus:ring-[#00E5FF]/50 transition-all duration-300 focus:bg-[#02040A]"
                       placeholder="contato@empresa.com"
                     />
@@ -102,7 +129,8 @@ export function RequestPage() {
                     <select
                       id="service"
                       required
-                      defaultValue=""
+                      value={formData.service}
+                      onChange={(e) => setFormData({ ...formData, service: e.target.value })}
                       className="w-full bg-[#02040A]/50 border border-[#00E5FF]/20 rounded-xl px-5 py-4 text-white appearance-none focus:outline-none focus:border-[#00E5FF]/80 focus:ring-1 focus:ring-[#00E5FF]/50 transition-all duration-300 focus:bg-[#02040A]"
                     >
                       <option value="" disabled>Selecione a categoria técnica...</option>
@@ -125,7 +153,8 @@ export function RequestPage() {
                   <div className="relative">
                     <select
                       id="budget"
-                      defaultValue=""
+                      value={formData.budget}
+                      onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
                       className="w-full bg-[#02040A]/50 border border-[#00E5FF]/20 rounded-xl px-5 py-4 text-white appearance-none focus:outline-none focus:border-[#00E5FF]/80 focus:ring-1 focus:ring-[#00E5FF]/50 transition-all duration-300 focus:bg-[#02040A]"
                     >
                       <option value="" disabled>Selecione a faixa de investimento...</option>
@@ -149,10 +178,18 @@ export function RequestPage() {
                     id="description"
                     required
                     rows={5}
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     className="w-full bg-[#02040A]/50 border border-[#00E5FF]/20 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-[#00E5FF]/80 focus:ring-1 focus:ring-[#00E5FF]/50 transition-all duration-300 resize-none focus:bg-[#02040A]"
                     placeholder="Descreva as regras de negócio, objetivos primários e funcionalidades essenciais..."
                   ></textarea>
                 </div>
+
+                {formStatus === "error" && (
+                  <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-sm">
+                    {errorMessage}
+                  </div>
+                )}
 
                 <button
                   type="submit"
