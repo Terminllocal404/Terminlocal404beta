@@ -1,24 +1,93 @@
-# Manual de Instalação e Configuração do Servidor - Terminal 404
+# Manual Definitivo de Instalação e Configuração do Servidor - Terminal 404
 
-Este manual fornece o passo a passo completo para configurar, instalar e colocar em produção o sistema web da **Terminal 404**, incluindo o Front-end (React/Vite) e o Back-end (Python/FastAPI).
+Este manual fornece o passo a passo completo, **saindo do absoluto zero** (desde a contratação da máquina), para configurar, instalar, proteger e colocar em produção o sistema web da **Terminal 404** (Front-end em React/Vite e Back-end em Python/FastAPI).
 
 ---
 
-## 1. Preparação do Servidor Ubuntu (Última Versão)
+## FASE 0: Contratação e Acesso Inicial (O Zero Absoluto)
 
-Acesse seu servidor via SSH. Recomendamos rodar os comandos iniciais para atualizar os pacotes e instalar dependências essenciais:
+### 1. Contratando a Máquina (VPS)
+1. Escolha um provedor de nuvem (DigitalOcean, AWS, Linode, Hetzner, Hostinger, Google Cloud, etc.).
+2. Crie uma nova instância (Droplet, EC2, VPS).
+3. **Sistema Operacional recomendado:** Ubuntu 24.04 LTS (ou 22.04 LTS).
+4. **Configuração recomendada:** Pelo menos 1GB de RAM e 1 vCPU (necessário para rodar o build do React e o servidor Python simultaneamente).
+
+### 2. Primeiro Acesso
+Abra o terminal do seu computador e acesse o servidor usando o IP público fornecido pela hospedagem e o usuário `root` (o provedor enviará a senha por e-mail ou solicitará a configuração de uma chave SSH):
 
 ```bash
-# Atualizar a lista de pacotes e o sistema
-sudo apt update && sudo apt upgrade -y
+ssh root@IP_DO_SERVIDOR
+```
+*(Se estiver usando AWS, geralmente o usuário padrão é `ubuntu` e o acesso é feito via chave: `ssh -i chave.pem ubuntu@IP_DO_SERVIDOR`)*
 
-# Instalar pacotes essenciais
-sudo apt install -y curl git build-essential nginx ufw
+---
+
+## FASE 1: Configuração Básica e Segurança do Servidor
+
+Nunca rode aplicações em produção utilizando o usuário `root`. Vamos preparar o servidor com boas práticas.
+
+### 1. Criando um Usuário de Deploy
+Crie um usuário comum chamado `terminal` (ou outro de sua preferência):
+```bash
+adduser terminal
+# O sistema pedirá para você criar e confirmar uma senha. Preencha os demais campos com Enter.
 ```
 
-**Configurar o Firewall (UFW):**
-Liberte as portas essenciais para acesso SSH, HTTP e HTTPS:
+Adicione este usuário ao grupo de administradores (para poder executar comandos como `sudo`):
 ```bash
+usermod -aG sudo terminal
+```
+
+### 2. Configurando Acesso Seguro (SSH)
+Copie a chave de acesso do root para o novo usuário:
+```bash
+rsync --archive --chown=terminal:terminal ~/.ssh /home/terminal
+```
+
+**Teste o acesso!** Abra uma nova aba no terminal do seu computador e tente acessar com o novo usuário:
+```bash
+ssh terminal@IP_DO_SERVIDOR
+```
+
+Se conseguiu acessar com sucesso, feche a conexão do `root` e continue **apenas** com o usuário `terminal`.
+
+Para aumentar a segurança, desabilite o login via senha e o login direto via root:
+```bash
+sudo nano /etc/ssh/sshd_config
+```
+Procure e altere as seguintes linhas:
+- `PermitRootLogin no`
+- `PasswordAuthentication no`
+Salve (CTRL+O, Enter, CTRL+X) e reinicie o serviço:
+```bash
+sudo systemctl restart ssh
+```
+
+### 3. Configurando Memória Swap (Prevenção de Quedas)
+Se o servidor tem 1GB de RAM, o build do React pode travar por falta de memória. Crie 1GB de memória Swap (memória virtual no HD):
+```bash
+sudo fallocate -l 1G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+```
+
+### 4. Fuso Horário e Atualização de Pacotes
+Ajuste o fuso horário (exemplo: São Paulo):
+```bash
+sudo timedatectl set-timezone America/Sao_Paulo
+```
+
+Atualize o sistema:
+```bash
+sudo apt update && sudo apt upgrade -y
+```
+
+### 5. Configuração do Firewall (UFW)
+Instale pacotes essenciais e feche o servidor, deixando apenas portas de navegação e acesso abertas:
+```bash
+sudo apt install -y curl git build-essential nginx ufw
 sudo ufw allow OpenSSH
 sudo ufw allow 'Nginx Full'
 sudo ufw enable
@@ -26,109 +95,75 @@ sudo ufw enable
 
 ---
 
-## 2. Instalação das Dependências Necessárias
+## FASE 2: Instalação das Dependências do Sistema
 
-### Node.js e Gerenciadores de Pacote (Front-end)
-O Front-end utiliza Node.js e o gerenciador de pacotes `pnpm` ou `npm`.
-
+### 1. Node.js e Gerenciadores de Pacote (Front-end)
 ```bash
-# Instalar o Node.js (via NodeSource - versão 20 LTS recomendada)
+# Instalar o Node.js 20 LTS
 curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 sudo apt install -y nodejs
 
-# Instalar o PM2 para gerenciamento de processos (opcional para o back, essencial se for rodar Node no servidor)
-sudo npm install -g pm2
-
-# Instalar o pnpm (gerenciador de pacotes utilizado pelo projeto)
+# Instalar pnpm
 sudo npm install -g pnpm
 ```
 
-### Python 3 e Virtualenv (Back-end)
+### 2. Python 3 e Virtualenv (Back-end)
 ```bash
-# Instalar Python 3 e pacote venv
 sudo apt install -y python3 python3-pip python3-venv
 ```
 
 ---
 
-## 3. Configuração do Ambiente do Projeto
+## FASE 3: Clonando e Estruturando o Projeto
 
-Crie um diretório para a aplicação e clone seu repositório (substitua pelo URL do seu repositório):
+Vamos preparar a pasta `/var/www` para hospedar o projeto.
 
 ```bash
-# Criar pasta em /var/www
+# Criar a pasta raiz do projeto
 sudo mkdir -p /var/www/terminal404
-sudo chown -R $USER:$USER /var/www/terminal404
+
+# Passar a propriedade da pasta para o usuário 'terminal'
+sudo chown -R terminal:terminal /var/www/terminal404
+
+# Acessar a pasta
 cd /var/www/terminal404
 
-# Clonar o repositório (exemplo)
+# Clonar o repositório do projeto (substitua pelo link real do seu repositório)
 git clone https://github.com/seu-usuario/seu-repositorio.git .
 ```
 
-A estrutura do projeto deve conter a raiz (front-end) e a pasta `/backend`.
-
 ---
 
-## 4. Configuração do Banco de Dados (PostgreSQL)
+## FASE 4: Configuração das Variáveis de Ambiente
 
-*(A aplicação atual foca no envio de e-mails via SMTP, mas caso utilize ou expanda para um banco de dados para a área de Comunidade ou métricas, siga os passos abaixo).*
-
-```bash
-# Instalar PostgreSQL
-sudo apt install -y postgresql postgresql-contrib
-
-# Iniciar o serviço
-sudo systemctl start postgresql
-sudo systemctl enable postgresql
-
-# Criar banco e usuário
-sudo -i -u postgres psql -c "CREATE DATABASE terminal404;"
-sudo -i -u postgres psql -c "CREATE USER terminal_user WITH PASSWORD 'senha_super_segura';"
-sudo -i -u postgres psql -c "ALTER ROLE terminal_user SET client_encoding TO 'utf8';"
-sudo -i -u postgres psql -c "ALTER ROLE terminal_user SET default_transaction_isolation TO 'read committed';"
-sudo -i -u postgres psql -c "ALTER ROLE terminal_user SET timezone TO 'UTC';"
-sudo -i -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE terminal404 TO terminal_user;"
-```
-
----
-
-## 5. Configuração das Variáveis de Ambiente
-
-Na raiz do projeto, configure as variáveis de ambiente necessárias para o Front e para o Back.
-
-### Variáveis do Back-end
+### 1. Variáveis do Back-end (E-mail SMTP)
 ```bash
 cd /var/www/terminal404/backend
 cp .env.example .env
 nano .env
 ```
-No arquivo `/backend/.env`, adicione os dados de SMTP configurados:
+Preencha o arquivo com os dados de envio de e-mail (conforme fornecido anteriormente):
 ```env
 # Configurações de E-mail (SMTP)
 EMAIL_HOST=smtp.gmail.com
 EMAIL_PORT=587
 EMAIL_HOST_USER=terminallocal404@gmail.com
 EMAIL_HOST_PASSWORD=uhyf nnch vyrc rfht
-
-# Banco de Dados (se for usar o PostgreSQL configurado acima)
-DATABASE_URL=postgresql://terminal_user:senha_super_segura@localhost/terminal404
 ```
 
-### Variáveis do Front-end
+### 2. Variáveis do Front-end
 ```bash
 cd /var/www/terminal404
 nano .env.production
 ```
-Defina o endpoint base onde o back-end será servido:
+Defina o endpoint base onde o back-end está sendo servido:
 ```env
-VITE_API_BASE_URL=https://seusite.com/api
+VITE_API_BASE_URL=https://seu-dominio.com/api
 ```
 
 ---
 
-## 6. Configuração do Back-end (FastAPI)
-
-Vamos isolar o Python e instalar os pacotes, usando o Uvicorn como servidor.
+## FASE 5: Configuração e Inicialização do Back-end (Python/FastAPI)
 
 ```bash
 cd /var/www/terminal404/backend
@@ -137,36 +172,37 @@ cd /var/www/terminal404/backend
 python3 -m venv venv
 source venv/bin/activate
 
-# Instalar dependências
+# Instalar dependências da API
 pip install -r requirements.txt
 pip install uvicorn gunicorn
+
+# Sair do ambiente virtual
+deactivate
 ```
 
-**Criar serviço do Systemd para o Back-end (Gunicorn/Uvicorn):**
-
+**Criar serviço do Systemd para o Back-end rodar em segundo plano:**
 ```bash
 sudo nano /etc/systemd/system/terminal404-backend.service
 ```
-
-Cole o conteúdo abaixo:
+Cole o conteúdo:
 ```ini
 [Unit]
 Description=Gunicorn instance to serve Terminal 404 Backend
 After=network.target
 
 [Service]
-User=root
+User=terminal
 Group=www-data
 WorkingDirectory=/var/www/terminal404/backend
 Environment="PATH=/var/www/terminal404/backend/venv/bin"
-# O Gunicorn vai rodar o FastAPI na porta local 8000 usando Uvicorn workers
+# Executa o FastAPI na porta 8000
 ExecStart=/var/www/terminal404/backend/venv/bin/gunicorn app.main:app -w 4 -k uvicorn.workers.UvicornWorker -b 127.0.0.1:8000
 
 [Install]
 WantedBy=multi-user.target
 ```
 
-Inicie o serviço:
+Ative e inicie o serviço do Back-end:
 ```bash
 sudo systemctl start terminal404-backend
 sudo systemctl enable terminal404-backend
@@ -174,33 +210,29 @@ sudo systemctl enable terminal404-backend
 
 ---
 
-## 7. Configuração do Front-end (React/Vite)
-
-Compile a versão otimizada do front-end que será servida estaticamente pelo Nginx.
+## FASE 6: Compilação (Build) do Front-end (React)
 
 ```bash
 cd /var/www/terminal404
 
-# Instalar dependências do front-end
+# Instalar pacotes do front-end
 pnpm install
 
-# Construir (Build) do site
+# Gerar a versão de produção (Build)
 pnpm run build
 ```
-O build finalizado ficará dentro da pasta `/var/www/terminal404/dist`.
+*(Os arquivos finais serão gerados na pasta `/var/www/terminal404/dist`)*
 
 ---
 
-## 8. Como Deixar o Projeto Rodando em Produção (Nginx e SSL)
+## FASE 7: Expondo o Site para a Web (Nginx e SSL)
 
-O Nginx vai servir os arquivos estáticos gerados na pasta `/dist` do React e fazer o *Reverse Proxy* (redirecionamento) da rota `/api` para a porta local `8000` do FastAPI.
+Vamos configurar o Nginx para servir o Front-end e redirecionar a rota `/api` para o Back-end.
 
-**Criar o Bloco de Servidor no Nginx:**
 ```bash
 sudo nano /etc/nginx/sites-available/terminal404
 ```
-
-Cole a configuração:
+Cole a configuração abaixo:
 ```nginx
 server {
     listen 80;
@@ -225,14 +257,16 @@ server {
 }
 ```
 
-Ative o site e reinicie o Nginx:
+Ative o site no Nginx e reinicie o serviço:
 ```bash
 sudo ln -s /etc/nginx/sites-available/terminal404 /etc/nginx/sites-enabled/
+# Remove a página default do Nginx (opcional)
+sudo rm /etc/nginx/sites-enabled/default
 sudo nginx -t
 sudo systemctl restart nginx
 ```
 
-### Configurar Certificado SSL (HTTPS via Certbot)
+### Configurar Certificado de Segurança SSL (HTTPS)
 ```bash
 # Instalar o Certbot
 sudo apt install -y certbot python3-certbot-nginx
@@ -243,31 +277,26 @@ sudo certbot --nginx -d seu-dominio.com -d www.seu-dominio.com
 
 ---
 
-## 9. Como Iniciar a Aplicação e Comandos Úteis
+## FASE 8: Manutenção e Comandos Úteis
 
-Neste formato, a aplicação já está rodando em produção perfeitamente! 
+Seu projeto agora está rodando de forma profissional e segura em produção!
 
-- O **Front-end** é carregado automaticamente pelo Nginx ao acessar seu domínio.
-- O **Back-end** está rodando em segundo plano pelo `systemd`.
-
-**Comandos Úteis de Manutenção:**
-
-- **Ver logs do Back-end (FastAPI):**
+- **Ver logs de erros do Back-end (FastAPI):**
   ```bash
   sudo journalctl -u terminal404-backend -f
   ```
-- **Reiniciar o Back-end (após alterar código Python):**
+- **Reiniciar o Back-end após alterar o código Python:**
   ```bash
   sudo systemctl restart terminal404-backend
   ```
-- **Fazer deploy de novas atualizações do Front-end:**
+- **Como atualizar o site com novo código:**
   ```bash
   cd /var/www/terminal404
   git pull
   pnpm install
   pnpm run build
   ```
-- **Reiniciar o servidor Nginx:**
+- **Reiniciar o Nginx (se alterar configurações de proxy):**
   ```bash
   sudo systemctl restart nginx
   ```
