@@ -172,6 +172,9 @@ cd /var/www/terminal404/backend
 python3 -m venv venv
 source venv/bin/activate
 
+# Atualizar o pip para a versão mais recente
+pip install --upgrade pip
+
 # Instalar dependências da API
 pip install -r requirements.txt
 pip install uvicorn gunicorn
@@ -179,6 +182,8 @@ pip install uvicorn gunicorn
 # Sair do ambiente virtual
 deactivate
 ```
+
+> **Aviso de Compatibilidade:** Se você receber um erro durante a instalação informando problemas com `pydantic-core`, `maturin` ou `cargo` (como *TypeError: ForwardRef._evaluate() missing 1 required keyword-only argument*), isso acontece porque a versão do Ubuntu vem com o Python 3.13, e as dependências antigas do projeto precisam ser atualizadas. Nós já atualizamos o arquivo `requirements.txt` no repositório com versões mais recentes do FastAPI e do Pydantic (>=2.9.0) para corrigir nativamente essa incompatibilidade. Certifique-se de usar a versão mais recente do repositório!
 
 **Criar serviço do Systemd para o Back-end rodar em segundo plano:**
 ```bash
