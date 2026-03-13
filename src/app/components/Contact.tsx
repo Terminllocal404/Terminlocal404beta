@@ -1,36 +1,7 @@
 import { motion } from "motion/react";
-import { Mail, Phone, Send, Instagram, Github, Linkedin, MessageCircle, Terminal } from "lucide-react";
-import { useState } from "react";
+import { Mail, Phone, Instagram, Github, Linkedin, MessageCircle, Terminal, ArrowRight } from "lucide-react";
 
 export function Contact() {
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
-  const [errorMessage, setErrorMessage] = useState("");
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus("submitting");
-    setErrorMessage("");
-
-    try {
-      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
-      const response = await fetch(`${apiUrl}/api/send-message`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) throw new Error("Falha na comunicação com o servidor SMTP.");
-      
-      setStatus("success");
-      setFormData({ name: "", email: "", message: "" });
-    } catch (error) {
-      console.error(error);
-      setStatus("error");
-      setErrorMessage("Erro ao processar o payload. Verifique a conexão com o servidor de e-mail.");
-    }
-  };
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -46,7 +17,7 @@ export function Contact() {
 
   const socialLinks = [
     { name: "Instagram", url: "https://www.instagram.com/terminal_4.0.4/", icon: Instagram },
-    { name: "WhatsApp", url: "https://wa.me/553291547944", icon: MessageCircle },
+    { name: "WhatsApp", url: "https://wa.me/5532991547944", icon: MessageCircle },
     { name: "GitHub", url: "https://github.com/Terminllocal404", icon: Github },
     { name: "LinkedIn", url: "https://www.linkedin.com/posts/terminal-404_terminal404-linkedin-activity-7419888008151261184-qFpP", icon: Linkedin },
   ];
@@ -69,7 +40,7 @@ export function Contact() {
             <motion.div variants={itemVariants} className="flex items-center gap-3 mb-6">
               <div className="w-12 h-[1px] bg-gradient-to-r from-transparent to-[#00E5FF]" />
               <span className="text-[#00E5FF] font-mono font-semibold text-sm uppercase tracking-widest bg-[#00E5FF]/10 px-3 py-1 rounded-full border border-[#00E5FF]/20 flex items-center gap-2">
-                <Terminal className="w-4 h-4" /> Conexão Segura
+                <Terminal className="w-4 h-4" /> Comunicação Direta
               </span>
             </motion.div>
             
@@ -99,7 +70,7 @@ export function Contact() {
                   <Phone className="w-6 h-6" />
                 </div>
                 <div>
-                  <h4 className="text-white font-bold mb-1 tracking-wide">Comunicação Direta</h4>
+                  <h4 className="text-white font-bold mb-1 tracking-wide">Telefone Oficial</h4>
                   <a href="tel:+5532991547944" className="text-[#8B949E] hover:text-[#00E5FF] transition-colors font-mono text-sm">
                     (32) 99154-7944
                   </a>
@@ -137,98 +108,40 @@ export function Contact() {
             </motion.div>
           </div>
 
-          {/* Formulário */}
-          <motion.div variants={itemVariants} className="bg-[#0B0F1A]/80 backdrop-blur-xl p-8 md:p-12 rounded-3xl border border-[#00E5FF]/20 shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#00E5FF]/10 blur-[80px] rounded-full pointer-events-none group-hover:bg-[#00E5FF]/20 transition-colors duration-700" />
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#00E5FF]/50 to-transparent" />
-            
-            <h3 className="text-2xl font-black text-white mb-8 relative tracking-tight">
-              Transmitir <span className="text-[#00E5FF]">Mensagem</span>
-            </h3>
-            
-            {status === "success" ? (
-              <div className="flex flex-col items-center justify-center h-64 text-center">
-                <div className="w-16 h-16 rounded-full bg-[#00E5FF]/20 flex items-center justify-center text-[#00E5FF] mb-4">
-                  <Send className="w-8 h-8" />
-                </div>
-                <h4 className="text-xl font-bold text-white mb-2">Mensagem Transmitida</h4>
-                <p className="text-[#8B949E] text-sm mb-6">Em breve retornaremos o contato.</p>
-                <button 
-                  onClick={() => setStatus("idle")}
-                  className="text-[#00E5FF] font-mono text-sm underline hover:text-white transition-colors"
-                >
-                  Enviar nova mensagem
-                </button>
+          {/* Call to Action - WhatsApp */}
+          <motion.div variants={itemVariants} className="flex flex-col justify-center">
+            <div className="bg-[#0B0F1A]/80 backdrop-blur-xl p-8 md:p-12 rounded-3xl border border-[#00E5FF]/20 shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden group h-full flex flex-col items-center text-center justify-center">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-[#00E5FF]/10 blur-[80px] rounded-full pointer-events-none group-hover:bg-[#00E5FF]/20 transition-colors duration-700" />
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#00E5FF]/50 to-transparent" />
+              
+              <div className="w-24 h-24 rounded-full bg-[#00E5FF]/10 flex items-center justify-center mb-8 border border-[#00E5FF]/30 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(0,229,255,0.3)] transition-all duration-500">
+                <MessageCircle className="w-12 h-12 text-[#00E5FF]" />
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="relative space-y-6">
-                <div className="space-y-2">
-                  <label htmlFor="name" className="text-xs font-mono font-semibold uppercase tracking-widest text-[#8B949E] flex items-center gap-2">
-                    <span className="text-[#00E5FF]">&gt;</span> Identificação
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    required
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="Nome corporativo ou pessoal"
-                    className="w-full bg-[#02040A]/50 border border-[#00E5FF]/20 rounded-xl px-5 py-4 text-white placeholder:text-[#6E7681] focus:outline-none focus:border-[#00E5FF]/80 focus:ring-1 focus:ring-[#00E5FF]/50 transition-all duration-300 focus:bg-[#02040A]"
-                  />
-                </div>
 
-                <div className="space-y-2">
-                  <label htmlFor="email" className="text-xs font-mono font-semibold uppercase tracking-widest text-[#8B949E] flex items-center gap-2">
-                    <span className="text-[#00E5FF]">&gt;</span> Endereço Eletrônico
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="seu@email.com"
-                    className="w-full bg-[#02040A]/50 border border-[#00E5FF]/20 rounded-xl px-5 py-4 text-white placeholder:text-[#6E7681] focus:outline-none focus:border-[#00E5FF]/80 focus:ring-1 focus:ring-[#00E5FF]/50 transition-all duration-300 focus:bg-[#02040A]"
-                  />
-                </div>
+              <h3 className="text-3xl font-black text-white mb-4 relative tracking-tight">
+                Atendimento <span className="text-[#00E5FF]">Imediato</span>
+              </h3>
+              
+              <p className="text-[#8B949E] mb-10 leading-relaxed max-w-md mx-auto">
+                Nossa equipe está pronta para conversar. Clique abaixo para ser redirecionado diretamente ao nosso WhatsApp oficial e falar com um de nossos arquitetos.
+              </p>
+              
+              <a
+                href="https://wa.me/5532991547944"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto px-10 py-5 bg-gradient-to-r from-[#00E5FF] to-blue-500 hover:from-white hover:to-white text-[#02040A] font-black uppercase tracking-widest rounded-xl transition-all duration-500 flex items-center justify-center gap-3 hover:shadow-[0_0_30px_rgba(0,229,255,0.4)] transform hover:-translate-y-1"
+              >
+                <MessageCircle className="w-6 h-6" />
+                Falar com a equipe
+                <ArrowRight className="w-5 h-5 ml-2 opacity-70" />
+              </a>
 
-                <div className="space-y-2">
-                  <label htmlFor="message" className="text-xs font-mono font-semibold uppercase tracking-widest text-[#8B949E] flex items-center gap-2">
-                    <span className="text-[#00E5FF]">&gt;</span> Payload (Mensagem)
-                  </label>
-                  <textarea
-                    id="message"
-                    required
-                    rows={4}
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="Descreva a arquitetura do seu projeto ou assunto a ser discutido..."
-                    className="w-full bg-[#02040A]/50 border border-[#00E5FF]/20 rounded-xl px-5 py-4 text-white placeholder:text-[#6E7681] focus:outline-none focus:border-[#00E5FF]/80 focus:ring-1 focus:ring-[#00E5FF]/50 transition-all duration-300 resize-none focus:bg-[#02040A]"
-                  />
-                </div>
-
-                {status === "error" && (
-                  <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-sm">
-                    {errorMessage}
-                  </div>
-                )}
-
-                <button
-                  type="submit"
-                  disabled={status === "submitting"}
-                  className="w-full bg-gradient-to-r from-[#00E5FF] to-blue-500 hover:from-white hover:to-white text-[#02040A] font-black uppercase tracking-widest py-4 rounded-xl transition-all duration-500 flex items-center justify-center gap-3 hover:shadow-[0_0_30px_rgba(0,229,255,0.4)] transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-                >
-                  {status === "submitting" ? (
-                    <span className="animate-pulse">Transmitindo...</span>
-                  ) : (
-                    <>
-                      <Send className="w-5 h-5" />
-                      Enviar Solicitação
-                    </>
-                  )}
-                </button>
-              </form>
-            )}
+              <div className="mt-8 flex items-center gap-2 text-xs font-mono text-[#6E7681]">
+                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                Atendimento em horário comercial
+              </div>
+            </div>
           </motion.div>
         </motion.div>
       </div>
