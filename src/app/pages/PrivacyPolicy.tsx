@@ -176,8 +176,8 @@ export function PrivacyPolicy() {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-[#00E5FF] uppercase tracking-wider mb-2">Telefone / WhatsApp</p>
-                  <a href="tel:+5532991547944" className="text-lg text-white hover:text-[#00E5FF] transition-colors font-medium">
-                    (32) 99154-7944
+                  <a href="tel:+553291547944" className="text-lg text-white hover:text-[#00E5FF] transition-colors font-medium">
+                    (32) 9154-7944
                   </a>
                 </div>
               </div>

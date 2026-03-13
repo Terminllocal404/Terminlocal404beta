@@ -136,7 +136,7 @@ Se for necessário alterar o número do WhatsApp da empresa no futuro, procure p
 
 **Exemplo de Padrão Embutido:**
 ```html
-<a href="https://wa.me/5532991547944">
+<a href="https://wa.me/553291547944">
   Falar com a Equipe
 </a>
 ```

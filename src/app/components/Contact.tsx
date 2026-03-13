@@ -17,7 +17,7 @@ export function Contact() {
 
   const socialLinks = [
     { name: "Instagram", url: "https://www.instagram.com/terminal_4.0.4/", icon: Instagram },
-    { name: "WhatsApp", url: "https://wa.me/5532991547944", icon: MessageCircle },
+    { name: "WhatsApp", url: "https://wa.me/553291547944", icon: MessageCircle },
     { name: "GitHub", url: "https://github.com/Terminllocal404", icon: Github },
     { name: "LinkedIn", url: "https://www.linkedin.com/posts/terminal-404_terminal404-linkedin-activity-7419888008151261184-qFpP", icon: Linkedin },
   ];
@@ -71,8 +71,8 @@ export function Contact() {
                 </div>
                 <div>
                   <h4 className="text-white font-bold mb-1 tracking-wide">Telefone Oficial</h4>
-                  <a href="tel:+5532991547944" className="text-[#8B949E] hover:text-[#00E5FF] transition-colors font-mono text-sm">
-                    (32) 99154-7944
+                  <a href="tel:+553291547944" className="text-[#8B949E] hover:text-[#00E5FF] transition-colors font-mono text-sm">
+                    (32) 9154-7944
                   </a>
                 </div>
               </div>
@@ -127,7 +127,7 @@ export function Contact() {
               </p>
               
               <a
-                href="https://wa.me/5532991547944"
+                href="https://wa.me/553291547944"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto px-10 py-5 bg-gradient-to-r from-[#00E5FF] to-blue-500 hover:from-white hover:to-white text-[#02040A] font-black uppercase tracking-widest rounded-xl transition-all duration-500 flex items-center justify-center gap-3 hover:shadow-[0_0_30px_rgba(0,229,255,0.4)] transform hover:-translate-y-1"

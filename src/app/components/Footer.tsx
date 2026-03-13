@@ -10,7 +10,7 @@ const socialLinks = [
   },
   {
     name: "WhatsApp",
-    url: "https://wa.me/5532991547944",
+    url: "https://wa.me/553291547944",
     icon: MessageCircle,
   },
   {
