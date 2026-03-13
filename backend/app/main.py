@@ -1,23 +1,21 @@
+import os
+import requests
 from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, EmailStr
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
 app = FastAPI(
-    title="Terminal 404 - Email Microservice",
-    description="API para envio de e-mails corporativos a partir dos formulários do site.",
-    version="1.0.0"
+    title="Terminal 404 - Integration Service",
+    description="API para envio de mensagens do formulário do site para o WhatsApp da empresa.",
+    version="2.0.0"
 )
 
 # CORS Configuration
 origins = [
-    "*", # In production, restrict to your domain like "https://terminal404.com.br"
+    "*", # Em produção, altere para o domínio do seu frontend como "https://terminal404.com.br"
 ]
 
 app.add_middleware(
@@ -28,12 +26,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Environment Variables
-SMTP_SERVER = os.getenv("SMTP_SERVER", "smtp.gmail.com")
-SMTP_PORT = int(os.getenv("SMTP_PORT", 587))
-SMTP_USERNAME = os.getenv("SMTP_USERNAME")
-SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
-DESTINATION_EMAIL = os.getenv("DESTINATION_EMAIL", "terminallocal404@gmail.com")
+# Environment Variables - WhatsApp Cloud API
+WHATSAPP_API_TOKEN = os.getenv("WHATSAPP_API_TOKEN")
+WHATSAPP_PHONE_ID = os.getenv("WHATSAPP_PHONE_ID")
+DESTINATION_WHATSAPP_NUMBER = os.getenv("DESTINATION_WHATSAPP_NUMBER") # Número do WhatsApp da empresa com código do país (ex: 5511999999999)
 
 class ContactFormPayload(BaseModel):
     name: str
@@ -44,58 +40,63 @@ class ContactFormPayload(BaseModel):
 
 @app.get("/health")
 def health_check():
-    return {"status": "ok", "message": "Email service is running."}
+    return {"status": "ok", "message": "Integration service is running."}
 
-@app.post("/api/send-email")
-def send_email(payload: ContactFormPayload):
-    if not SMTP_USERNAME or not SMTP_PASSWORD:
+@app.post("/api/send-message")
+def send_message_to_whatsapp(payload: ContactFormPayload):
+    if not WHATSAPP_API_TOKEN or not WHATSAPP_PHONE_ID or not DESTINATION_WHATSAPP_NUMBER:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Configurações de SMTP ausentes no servidor."
+            detail="Configurações da API do WhatsApp estão ausentes no servidor."
         )
+
+    # Formatar o texto da mensagem a ser enviada
+    text_message = (
+        "🟢 *NOVA MENSAGEM DO PORTAL CORPORATIVO TERMINAL 404*\n"
+        "====================================\n\n"
+        f"👤 *Nome:* {payload.name}\n"
+        f"📧 *E-mail:* {payload.email}\n"
+    )
+
+    if payload.service:
+        text_message += f"🛠 *Serviço:* {payload.service}\n"
+    if payload.budget:
+        text_message += f"💰 *Orçamento:* {payload.budget}\n"
+
+    text_message += f"\n📝 *Mensagem:*\n{payload.message}\n"
+
+    # Preparar a requisição para a API do WhatsApp (Meta)
+    url = f"https://graph.facebook.com/v19.0/{WHATSAPP_PHONE_ID}/messages"
+    
+    headers = {
+        "Authorization": f"Bearer {WHATSAPP_API_TOKEN}",
+        "Content-Type": "application/json"
+    }
+    
+    data = {
+        "messaging_product": "whatsapp",
+        "to": DESTINATION_WHATSAPP_NUMBER,
+        "type": "text",
+        "text": {
+            "body": text_message
+        }
+    }
 
     try:
-        msg = MIMEMultipart()
-        msg['From'] = SMTP_USERNAME
-        msg['To'] = DESTINATION_EMAIL
-        msg['Subject'] = f"[Terminal 404] Nova Requisição de: {payload.name}"
-
-        body = f"""
-        NOVA MENSAGEM DO PORTAL CORPORATIVO TERMINAL 404
-        ================================================
-
-        IDENTIFICAÇÃO:
-        Nome: {payload.name}
-        E-mail: {payload.email}
-        """
-
-        if payload.service:
-            body += f"\nSERVIÇO: {payload.service}"
-        if payload.budget:
-            body += f"\nORÇAMENTO: {payload.budget}"
-
-        body += f"\n\nMENSAGEM / PAYLOAD:\n{payload.message}\n"
+        response = requests.post(url, headers=headers, json=data)
+        response.raise_for_status() # Lançará uma exceção para códigos de erro HTTP
         
-        msg.attach(MIMEText(body, 'plain', 'utf-8'))
-
-        # SMTP Connection and send
-        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
-        server.starttls()
-        server.login(SMTP_USERNAME, SMTP_PASSWORD)
-        server.send_message(msg)
-        server.quit()
-
-        return {"status": "success", "message": "Payload transmitido com sucesso."}
+        return {"status": "success", "message": "Mensagem encaminhada com sucesso para o WhatsApp."}
         
-    except smtplib.SMTPAuthenticationError:
+    except requests.exceptions.HTTPError as errh:
+        print(f"Erro na API do WhatsApp: {errh.response.text}")
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Falha de autenticação com o servidor SMTP."
+            status_code=status.HTTP_502_BAD_GATEWAY,
+            detail="Falha ao comunicar com a API do WhatsApp."
         )
     except Exception as e:
-        # Logging real error in backend, returning generic error to client
-        print(f"SMTP Error: {e}")
+        print(f"Erro inesperado: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Erro ao processar e enviar a mensagem."
+            detail="Erro interno ao processar e enviar a mensagem."
         )

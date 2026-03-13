@@ -1,150 +1,71 @@
-# Terminal 404 - Email Microservice (Python)
+# Terminal 404 - WhatsApp Integration Microservice (Python)
 
-Este é o microsserviço backend em Python (FastAPI) responsável pelo envio de e-mails da aplicação frontend "Terminal 404". Ele captura as requisições enviadas pelos formulários (Contato e Request) e os envia para o e-mail corporativo utilizando o SMTP do Gmail.
+Este é o microsserviço back-end em Python (FastAPI) responsável por capturar as mensagens enviadas através dos formulários do site "Terminal 404" e encaminhá-las automaticamente para o WhatsApp corporativo da empresa, utilizando a Cloud API oficial da Meta.
+
+> **Atenção:** O serviço de SMTP (e-mail) foi descontinuado. Agora utilizamos a integração via WhatsApp.
 
 ---
 
-## 🚀 Manual de Instalação e Deploy (Ubuntu - Digitation)
+## 🚀 Estrutura e Rotas
 
-### 1. Preparando o Ambiente no Servidor Ubuntu
+A aplicação roda nativamente na porta `8000` e disponibiliza as seguintes rotas:
 
-1. Conecte-se ao seu servidor via SSH:
-   ```bash
-   ssh root@seu_ip_digitation
-   ```
+- **`GET /health`**
+  - Checa a integridade do serviço. Retorna Status HTTP 200.
+- **`POST /api/send-message`**
+  - Rota que recebe o payload JSON do formulário e engatilha o disparo na API da Meta.
 
-2. Atualize os pacotes do servidor:
-   ```bash
-   sudo apt update && sudo apt upgrade -y
-   ```
+---
 
-3. Instale o Python 3, o `pip` e a biblioteca para ambiente virtual:
-   ```bash
-   sudo apt install python3 python3-pip python3-venv ufw nginx -y
-   ```
+## ⚙️ Variáveis de Ambiente
 
-### 2. Clonando e Configurando o Projeto
+Para o ambiente funcionar, é necessário clonar o arquivo `.env.example` para `.env` e preencher as seguintes variáveis fornecidas pela Meta / WhatsApp Business API:
 
-1. Acesse o diretório onde o backend ficará armazenado (ex: `/var/www/`):
-   ```bash
-   cd /var/www/
-   # Caso você tenha subido os arquivos deste repositório, faça o clone/download
-   # Para fins de exemplo, chamaremos a pasta do projeto de "t404-backend"
-   ```
+```env
+WHATSAPP_API_TOKEN=seu_token_permanente_da_meta_aqui
+WHATSAPP_PHONE_ID=id_do_numero_de_telefone_de_origem
+DESTINATION_WHATSAPP_NUMBER=5511999999999 # Número de destino que vai receber a notificação
+```
 
-2. Acesse a pasta do backend:
-   ```bash
-   cd /var/www/t404-backend
-   ```
+---
 
-3. Crie e ative o ambiente virtual:
+## 🛠️ Como Testar Localmente a API
+
+1. Crie o ambiente e instale as dependências:
    ```bash
    python3 -m venv venv
    source venv/bin/activate
-   ```
-
-4. Instale as dependências:
-   ```bash
    pip install -r requirements.txt
    ```
-
-5. Configure as variáveis de ambiente:
+2. Rode o servidor de desenvolvimento:
    ```bash
-   cp .env.example .env
-   nano .env
+   fastapi dev app/main.py
    ```
-   *(Preencha com o seu e-mail do Gmail e a senha provisória `uhyf nnch vyrc rfht` - certifique-se de que é uma 'Senha de App' gerada no Google, caso haja 2FA ativado).*
-
-### 3. Rodando em Produção com Systemd + Gunicorn / Uvicorn
-
-Para garantir que o serviço reinicie automaticamente caso caia ou o servidor reinicie, vamos criar um serviço no Systemd.
-
-1. Crie o arquivo do serviço:
+   *Ou via uvicorn:*
    ```bash
-   sudo nano /etc/systemd/system/t404-backend.service
+   uvicorn app.main:app --reload
    ```
 
-2. Insira as configurações abaixo (ajuste os caminhos conforme o diretório real):
-   ```ini
-   [Unit]
-   Description=Gunicorn instance to serve Terminal 404 Backend FastAPI
-   After=network.target
-
-   [Service]
-   User=www-data
-   Group=www-data
-   WorkingDirectory=/var/www/t404-backend
-   Environment="PATH=/var/www/t404-backend/venv/bin"
-   ExecStart=/var/www/t404-backend/venv/bin/gunicorn app.main:app -w 4 -k uvicorn.workers.UvicornWorker -b 127.0.0.1:8000
-
-   [Install]
-   WantedBy=multi-user.target
-   ```
-
-3. Ative e inicie o serviço:
+3. Teste a integridade (Health Check):
    ```bash
-   sudo systemctl start t404-backend
-   sudo systemctl enable t404-backend
+   curl http://127.0.0.1:8000/health
    ```
+   *Retorno esperado: `{"status": "ok", "message": "Integration service is running."}`*
 
-### 4. Configuração do Reverse Proxy (NGINX)
-
-1. Crie o bloco de servidor do Nginx:
+4. Teste o Envio de Mensagem (cURL):
    ```bash
-   sudo nano /etc/nginx/sites-available/t404-backend
-   ```
-
-2. Insira o código a seguir (substitua `api.terminal404.com.br` pelo seu domínio ou IP):
-   ```nginx
-   server {
-       listen 80;
-       server_name api.terminal404.com.br; # Coloque seu domínio ou IP
-
-       location / {
-           proxy_pass http://127.0.0.1:8000;
-           proxy_set_header Host $host;
-           proxy_set_header X-Real-IP $remote_addr;
-           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-           proxy_set_header X-Forwarded-Proto $scheme;
-       }
-   }
-   ```
-
-3. Ative a configuração e reinicie o Nginx:
-   ```bash
-   sudo ln -s /etc/nginx/sites-available/t404-backend /etc/nginx/sites-enabled
-   sudo nginx -t
-   sudo systemctl restart nginx
-   ```
-
-### 5. Configuração Básica de Segurança e Firewall (UFW)
-
-Para fechar portas desnecessárias:
-
-```bash
-sudo ufw allow 'Nginx Full'
-sudo ufw allow OpenSSH
-sudo ufw enable
-```
-
-### 6. Como Testar a API (via Terminal local)
-
-1. Teste a integridade (Health Check):
-   ```bash
-   curl http://SEU_IP/health
-   ```
-   *Retorno esperado: `{"status": "ok", "message": "Email service is running."}`*
-
-2. Teste o Envio de Email via POST (cURL):
-   ```bash
-   curl -X POST http://SEU_IP/api/send-email \
+   curl -X POST http://127.0.0.1:8000/api/send-message \
      -H "Content-Type: application/json" \
      -d '{
        "name": "Cliente Teste",
        "email": "cliente@teste.com",
-       "message": "Teste de payload para a API da Terminal 404"
+       "message": "Teste de payload para a API da Terminal 404 - WhatsApp"
      }'
    ```
-   *Retorno esperado: `{"status": "success", "message": "Payload transmitido com sucesso."}`*
+   *Retorno esperado: `{"status": "success", "message": "Mensagem encaminhada com sucesso para o WhatsApp."}`*
 
-No Frontend (em React), já foi implementada a chamada `fetch` dentro de `Contact.tsx` e `RequestPage.tsx` disparando para a variável de ambiente `VITE_API_URL` apontando para esse servidor!
+---
+
+## 📖 Manual de Instalação no Servidor (Deploy)
+
+Para acessar o **Manual Completo (Passo a Passo)** de como instalar isso em um servidor Ubuntu (DigitalOcean, AWS, etc) do zero e como mantê-lo rodando de forma profissional com Nginx e Gunicorn, consulte o arquivo **`SERVER_SETUP_MANUAL.md`** localizado na raiz do projeto.

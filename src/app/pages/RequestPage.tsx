@@ -20,7 +20,7 @@ export function RequestPage() {
 
     try {
       const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
-      const response = await fetch(`${apiUrl}/api/send-email`, {
+      const response = await fetch(`${apiUrl}/api/send-message`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
