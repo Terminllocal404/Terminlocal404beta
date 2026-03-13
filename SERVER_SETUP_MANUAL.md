@@ -83,7 +83,8 @@ Cole a configuração básica abaixo:
 ```nginx
 server {
     listen 80;
-    server_name www.terminal404.com.br terminal404.com.br;
+    # Aceita conexões pelo domínio ou pelo IP do servidor
+    server_name www.terminal404.com.br terminal404.com.br _;
 
     # O root aponta OBRIGATORIAMENTE para o diretório de build gerado
     root /var/www/terminal404/dist;
@@ -103,11 +104,18 @@ server {
 ```
 *Salve e saia (CTRL+O, ENTER, CTRL+X).*
 
-Habilite e reinicie o Nginx:
+Habilite as configurações, remova a página padrão do Nginx e reinicie:
 ```bash
+# Habilita o novo site
 sudo ln -s /etc/nginx/sites-available/terminal404 /etc/nginx/sites-enabled/
+
+# Remove o site padrão de boas-vindas do Nginx
+sudo rm /etc/nginx/sites-enabled/default
+
 # Verifique a sintaxe
 sudo nginx -t
+
+# Reinicie o Nginx para aplicar as alterações
 sudo systemctl restart nginx
 ```
 
