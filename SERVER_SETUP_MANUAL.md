@@ -1,201 +1,143 @@
-# Manual Técnico do Back-end de Integração com WhatsApp - Terminal 404
+# Manual Técnico de Implantação - Terminal 404 (Site Estático)
 
-Este manual documenta a infraestrutura, instalação, configuração e manutenção do novo Back-end em Python da **Terminal 404**, projetado para receber mensagens do site e encaminhá-las diretamente via WhatsApp através da API Cloud Oficial da Meta.
+Este manual documenta a infraestrutura, instalação, configuração e manutenção do novo Front-end Institucional da **Terminal 404**. O projeto foi refatorado para ser **100% estático**, não possuindo mais dependências de um Back-end ou APIs em Python. Toda a captura de contato é feita nativamente por redirecionamento direto para o WhatsApp oficial da empresa.
 
 ---
 
 ## Índice
 
-1. [Preparação do Servidor](#1-preparação-do-servidor)
-2. [Configuração do Projeto](#2-configuração-do-projeto)
-3. [Configuração da Integração com WhatsApp](#3-configuração-da-integração-com-whatsapp)
-4. [Execução da Aplicação (Systemd/Gunicorn)](#4-execução-da-aplicação)
-5. [Guia de Reinstalação e Manutenção](#5-guia-de-reinstalação-e-manutenção)
+1. [Visão Geral da Arquitetura](#1-visão-geral-da-arquitetura)
+2. [Hospedagem em Plataformas Modernas (Recomendado)](#2-hospedagem-em-plataformas-modernas-recomendado)
+3. [Hospedagem Tradicional em VPS (Ubuntu / Nginx)](#3-hospedagem-tradicional-em-vps-ubuntu--nginx)
+4. [Atualizando o Conteúdo (Manutenção)](#4-atualizando-o-conteúdo-manutenção)
+5. [Customização do Número de WhatsApp](#5-customização-do-número-de-whatsapp)
 
 ---
 
-## 1. Preparação do Servidor
+## 1. Visão Geral da Arquitetura
 
-Presume-se que o servidor está rodando **Ubuntu 22.04 LTS ou superior**.
+O site foi desenvolvido em **React** utilizando o ecossistema do **Vite** para o seu *build* otimizado. Suas principais características são:
+- **Zero-Backend:** Sem risco de vulnerabilidades, injeções SQL, sobrecarga de RAM via containers ou *downtimes* de banco de dados.
+- **Performance Nativa:** Redirecionamento instantâneo via URLs do WhatsApp (`wa.me`).
+- **Arquitetura Estática:** O build gera um diretório `dist` contendo apenas arquivos HTML, CSS e JS enxutos.
 
-### Atualização e Instalação de Dependências Base
-Acesse o servidor (preferencialmente usando um usuário como `terminal` ou `ubuntu` com privilégios de sudo) e execute:
+---
 
+## 2. Hospedagem em Plataformas Modernas (Recomendado)
+
+Como o projeto é estático, o uso de um servidor VPS (como EC2 ou Droplet) só para ele gera custo desnecessário e requer manutenção de S.O.
+Sugerimos o uso de **Vercel, Netlify, Cloudflare Pages ou GitHub Pages** (serviços frequentemente gratuitos para sites estáticos).
+
+### Implantação na Vercel (Exemplo):
+1. Crie uma conta em [vercel.com](https://vercel.com).
+2. Clique em **"Add New Project"** e conecte o repositório do seu código no GitHub/GitLab.
+3. Nas configurações do projeto (Build and Output Settings), o Vercel deve detectar automaticamente:
+   - **Framework Preset:** Vite
+   - **Build Command:** `npm run build`
+   - **Output Directory:** `dist`
+4. Clique em **Deploy**. A cada novo commit na branch principal (`main` ou `master`), o Vercel recompilará o site automaticamente e aplicará ao vivo.
+
+---
+
+## 3. Hospedagem Tradicional em VPS (Ubuntu / Nginx)
+
+Caso a infraestrutura da sua empresa exija a hospedagem *on-premise* ou em um VPS dedicado com Ubuntu, siga os passos a seguir:
+
+### 3.1. Preparação do Servidor
+Acesse o servidor via SSH:
 ```bash
-# Atualize as listas de pacotes e o sistema
 sudo apt update && sudo apt upgrade -y
-
-# Instale o Python 3, o gerenciador PIP e ferramentas de ambientes virtuais
-sudo apt install -y python3 python3-pip python3-venv git curl
+# Instale o Nginx (Servidor Web) e o Node.js (Para gerar o build)
+sudo apt install -y nginx curl git
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install -y nodejs
 ```
 
----
-
-## 2. Configuração do Projeto
-
-Vamos preparar o diretório que vai abrigar a aplicação Python e instalar suas dependências usando um ambiente isolado.
-
+### 3.2. Clonando o Repositório
 ```bash
-# Crie e acesse o diretório principal da aplicação
+# Crie a pasta do projeto
 sudo mkdir -p /var/www/terminal404
 sudo chown -R $USER:$USER /var/www/terminal404
+
+# Navegue até a pasta web e clone o projeto
+cd /var/www/
+git clone https://github.com/seu-usuario/seu-repositorio.git terminal404
+```
+
+### 3.3. Gerando os Arquivos Estáticos (Build)
+```bash
 cd /var/www/terminal404
-
-# Clone o repositório contendo o novo back-end (substitua pelo URL real)
-git clone https://github.com/seu-usuario/seu-repositorio.git .
-
-# Navegue até o diretório do Back-end
-cd backend
-
-# Crie e ative o ambiente virtual (venv)
-python3 -m venv venv
-source venv/bin/activate
-
-# Atualize o pip dentro do ambiente
-pip install --upgrade pip
-
-# Instale todas as dependências do projeto contidas no requirements.txt
-pip install -r requirements.txt
+# Instale as dependências Node (Pode usar npm, yarn ou pnpm)
+npm install
+# Construa o diretório otimizado (dist)
+npm run build
 ```
 
----
-
-## 3. Configuração da Integração com WhatsApp
-
-O sistema utiliza a **API Oficial do WhatsApp Cloud (Meta)**. Para funcionar, você precisa definir as variáveis de ambiente que o servidor lerá.
-
-### Como gerar as credenciais:
-1. Acesse o [Painel de Desenvolvedores da Meta](https://developers.facebook.com/).
-2. Crie um app do tipo "Empresa" e adicione o produto **WhatsApp**.
-3. Na seção do WhatsApp -> "Configuração da API", você encontrará o seu **ID do número de telefone** (`WHATSAPP_PHONE_ID`).
-4. Gere um Token de Acesso Permanente e defina o número de destino para receber as mensagens (ex: +55 11 99999-9999 sem espaços ou sinais = `5511999999999`).
-
-### Configurando as credenciais no Servidor:
-
+### 3.4. Configuração do Nginx
+Crie o arquivo de configuração de proxy/bloco de servidor:
 ```bash
-# Ainda dentro da pasta /var/www/terminal404/backend, crie o arquivo .env
-cp .env.example .env
-nano .env
+sudo nano /etc/nginx/sites-available/terminal404
 ```
 
-Preencha com as suas credenciais:
-
-```env
-WHATSAPP_API_TOKEN=seu_token_de_acesso_aqui
-WHATSAPP_PHONE_ID=seu_id_de_telefone_aqui
-DESTINATION_WHATSAPP_NUMBER=5511999999999
-```
-*Salve com CTRL+O -> Enter -> CTRL+X.*
-
----
-
-## 4. Execução da Aplicação
-
-Para manter a API funcionando continuamente e reiniciando com o servidor, configuraremos o `systemd` para usar o Gunicorn como gerenciador de processos.
-
-### Criação do Serviço no Systemd
-```bash
-sudo nano /etc/systemd/system/terminal404-backend.service
-```
-
-Cole a configuração a seguir:
-```ini
-[Unit]
-Description=Gunicorn instance to serve Terminal 404 Backend (WhatsApp API)
-After=network.target
-
-[Service]
-User=root
-# Ajuste o User acima para o usuário não-root que detém a pasta, por exemplo: terminal
-WorkingDirectory=/var/www/terminal404/backend
-Environment="PATH=/var/www/terminal404/backend/venv/bin"
-
-# Roda o FastAPI via Gunicorn e Uvicorn na porta 8000 local
-ExecStart=/var/www/terminal404/backend/venv/bin/gunicorn app.main:app -w 4 -k uvicorn.workers.UvicornWorker -b 127.0.0.1:8000
-
-[Install]
-WantedBy=multi-user.target
-```
-*Salve o arquivo e saia.*
-
-### Iniciar e Habilitar o Serviço:
-```bash
-sudo systemctl daemon-reload
-sudo systemctl start terminal404-backend
-sudo systemctl enable terminal404-backend
-```
-
-Para confirmar que o Back-end está rodando limpo e sem erros:
-```bash
-sudo systemctl status terminal404-backend
-```
-
-### Expondo a API (Configuração Nginx de Proxy)
-O tráfego de internet precisa bater no Back-end através do Nginx. Verifique seu arquivo de configuração do Nginx (em `/etc/nginx/sites-available/terminal404`):
+Cole a configuração básica abaixo:
 ```nginx
-    # Redirecionar as chamadas /api para o Backend FastAPI
-    location /api/ {
-        proxy_pass http://127.0.0.1:8000/;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
+server {
+    listen 80;
+    server_name www.terminal404.com.br terminal404.com.br;
+
+    # O root aponta OBRIGATORIAMENTE para o diretório de build gerado
+    root /var/www/terminal404/dist;
+    index index.html;
+
+    # Habilita SPA Routing (Essencial para React Router funcionar se aplicável)
+    location / {
+        try_files $uri $uri/ /index.html;
     }
+
+    # Desativa log de acesso para arquivos estáticos visando melhor performance
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
+        expires max;
+        log_not_found off;
+    }
+}
 ```
+*Salve e saia (CTRL+O, ENTER, CTRL+X).*
+
+Habilite e reinicie o Nginx:
+```bash
+sudo ln -s /etc/nginx/sites-available/terminal404 /etc/nginx/sites-enabled/
+# Verifique a sintaxe
+sudo nginx -t
+sudo systemctl restart nginx
+```
+
+*(Opcional e Recomendado: Utilize o Certbot para gerenciar certificados SSL e rodar em HTTPS).*
 
 ---
 
-## 5. Guia de Reinstalação e Manutenção
+## 4. Atualizando o Conteúdo (Manutenção)
 
-Esta seção apresenta as rotinas comuns caso o código ou o ambiente sejam atualizados.
-
-### Atualizando o Código e Reiniciando a Aplicação
-Se novos commits de código Python foram enviados para o repositório, faça o download e reinicie:
+Caso seja modificado algum texto ou o código seja atualizado no futuro, a rotina de manutenção no VPS será apenas baixar o código e re-gerar o build (sem necessidade de reiniciar o nginx, apenas substituir os arquivos):
 
 ```bash
 cd /var/www/terminal404
-git pull
-sudo systemctl restart terminal404-backend
+# Puxar código novo
+git pull origin main
+# Reinstalar caso haja novos pacotes
+npm install
+# Reconstruir o projeto estático
+npm run build
 ```
 
-### Reinstalando ou Atualizando Dependências
-Se novas bibliotecas Python foram adicionadas ao `requirements.txt`:
+## 5. Customização do Número de WhatsApp
 
-```bash
-cd /var/www/terminal404/backend
-source venv/bin/activate
-pip install -r requirements.txt
-deactivate
+As rotinas e formulários que antes acionavam APIs agora são botões de navegação. 
+Se for necessário alterar o número do WhatsApp da empresa no futuro, procure pelo link no código fonte, que geralmente se encontra em `src/app/components/Contact.tsx` e `src/app/pages/RequestPage.tsx` e `src/app/components/Footer.tsx`:
 
-sudo systemctl restart terminal404-backend
+**Exemplo de Padrão Embutido:**
+```html
+<a href="https://wa.me/5532991547944">
+  Falar com a Equipe
+</a>
 ```
-
-### Reinstalando Totalmente (Hard Reset)
-Caso o ambiente virtual quebre ou uma reinstalação do zero seja necessária:
-
-```bash
-cd /var/www/terminal404/backend
-
-# Pare a aplicação atual
-sudo systemctl stop terminal404-backend
-
-# Apague o ambiente virtual antigo e crie um novo
-rm -rf venv
-python3 -m venv venv
-source venv/bin/activate
-
-# Instale tudo de novo
-pip install --upgrade pip
-pip install -r requirements.txt
-deactivate
-
-# Volte a rodar o sistema
-sudo systemctl start terminal404-backend
-```
-
-### Consultando os Logs de Erro
-Caso o envio não funcione (Erro 500 no front-end), confira os logs do back-end para diagnosticar (erros de API Key, token vencido, etc):
-
-```bash
-sudo journalctl -u terminal404-backend -n 50 -f
-```
+Sempre que alterar o número do telefone no componente, lembre-se de rodar o `npm run build` ou comitar o código (no caso da Vercel) para publicar as alterações.
