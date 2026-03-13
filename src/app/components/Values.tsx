@@ -1,72 +1,78 @@
 import { motion } from "motion/react";
 import { Briefcase, Layers, Users, Shield, TrendingUp, Handshake } from "lucide-react";
 
+const values = [
+  { name: "Profissionalismo", icon: Briefcase, desc: "Excelência em cada entrega." },
+  { name: "Organização", icon: Layers, desc: "Processos estruturados e claros." },
+  { name: "Colaboração", icon: Users, desc: "Trabalho em equipe eficiente." },
+  { name: "Segurança", icon: Shield, desc: "Proteção em todas as camadas." },
+  { name: "Crescimento", icon: TrendingUp, desc: "Evolução técnica constante." },
+  { name: "Ética", icon: Handshake, desc: "Transparência e respeito." },
+];
+
 export function Values() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, scale: 0.9, y: 20 },
-    visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.5 } },
-  };
-
-  const values = [
-    { name: "Profissionalismo", icon: Briefcase },
-    { name: "Organização", icon: Layers },
-    { name: "Colaboração", icon: Users },
-    { name: "Segurança", icon: Shield },
-    { name: "Crescimento técnico", icon: TrendingUp },
-    { name: "Ética e respeito", icon: Handshake },
-  ];
-
   return (
-    <section id="valores" className="py-24 md:py-32 bg-[#0B0F1A] border-t border-[#00E5FF]/10 relative z-10">
-      <div className="absolute inset-0 bg-gradient-to-br from-[#05070D] to-[#0B0F1A] pointer-events-none" />
-      <div className="max-w-7xl mx-auto px-6 relative">
-        <div className="flex flex-col items-center text-center mb-16">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-8 h-[1px] bg-[#00E5FF]" />
-            <span className="text-[#00E5FF] font-semibold text-sm uppercase tracking-widest">
-              Nossos Pilares
-            </span>
-            <div className="w-8 h-[1px] bg-[#00E5FF]" />
-          </div>
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+    <section id="valores" className="py-20 md:py-32 bg-[#020408] relative overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/[0.05] to-transparent" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-[radial-gradient(ellipse_at_center,rgba(0,229,255,0.03),transparent_65%)] blur-[40px]" />
+      </div>
+
+      <div className="max-w-6xl mx-auto px-5 sm:px-6 relative z-10">
+        <div className="text-center mb-12 md:mb-16">
+          <motion.span
+            initial={{ opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-block text-[#00E5FF] text-[10px] md:text-[11px] font-medium uppercase tracking-[0.18em] bg-[#00E5FF]/[0.05] px-4 py-1.5 rounded-full border border-[#00E5FF]/12 mb-5"
+            style={{ fontFamily: "'JetBrains Mono', monospace" }}
+          >
+            Nossos Pilares
+          </motion.span>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-[1.75rem] sm:text-4xl md:text-[2.75rem] font-bold text-white mb-3.5 tracking-tight"
+            style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+          >
             Valores Institucionais
-          </h2>
-          <p className="text-lg text-[#B0B3B8] max-w-2xl">
-            Tudo o que construímos e a forma como operamos baseiam-se em
-            princípios sólidos, garantindo qualidade e credibilidade no mercado.
-          </p>
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-[15px] md:text-base text-white/30 max-w-xl mx-auto leading-relaxed"
+          >
+            Princípios que garantem qualidade, escalabilidade e credibilidade em cada projeto.
+          </motion.p>
         </div>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={containerVariants}
-          className="grid grid-cols-2 md:grid-cols-3 gap-6"
-        >
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
           {values.map((value, idx) => (
             <motion.div
               key={idx}
-              variants={itemVariants}
-              className="flex flex-col items-center justify-center p-8 rounded-xl bg-[#05070D] border border-[#00E5FF]/10 hover:border-[#00E5FF]/40 group hover:shadow-[0_0_20px_rgba(0,229,255,0.05)] transition-all duration-300"
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.05, duration: 0.4 }}
+              className="group flex flex-col items-center justify-center p-5 md:p-8 rounded-2xl bg-white/[0.015] border border-white/[0.05] hover:border-[#00E5FF]/[0.12] hover:bg-[#00E5FF]/[0.025] transition-all duration-400 cursor-default"
             >
-              <div className="w-16 h-16 rounded-full bg-[#00E5FF]/5 flex items-center justify-center mb-4 border border-[#00E5FF]/20 group-hover:bg-[#00E5FF]/10 group-hover:scale-110 transition-all duration-300">
-                <value.icon className="w-8 h-8 text-[#00E5FF]" />
+              <div className="w-11 h-11 md:w-13 md:h-13 rounded-xl bg-[#00E5FF]/[0.07] border border-[#00E5FF]/[0.12] flex items-center justify-center mb-3.5 group-hover:scale-110 group-hover:shadow-[0_0_18px_rgba(0,229,255,0.12)] transition-all duration-400">
+                <value.icon className="w-5 h-5 md:w-[22px] md:h-[22px] text-[#00E5FF]" />
               </div>
-              <h4 className="text-white font-semibold text-center mt-2 group-hover:text-[#00E5FF] transition-colors">
+              <h4
+                className="text-white/75 font-semibold text-[14px] md:text-[15px] text-center mb-1 group-hover:text-white transition-colors tracking-tight"
+                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+              >
                 {value.name}
               </h4>
+              <p className="text-white/18 text-[11px] md:text-[12px] text-center leading-relaxed">{value.desc}</p>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -1,94 +1,97 @@
 import { motion } from "motion/react";
 import { useParams, Navigate, Link } from "react-router";
 import { founders } from "../data/founders";
-import { 
-  ChevronLeft, 
-  Terminal, 
-  Layers, 
-  Briefcase, 
-  Code, 
-  ShieldCheck, 
-  Database 
-} from "lucide-react";
+import { ChevronLeft, Terminal, Layers, Briefcase, Code, ShieldCheck } from "lucide-react";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 
 export function FounderProfile() {
   const { id } = useParams<{ id: string }>();
   const founder = founders.find((f) => f.id === id);
 
-  if (!founder) {
-    return <Navigate to="/sobre" replace />;
-  }
+  if (!founder) return <Navigate to="/sobre" replace />;
 
   return (
-    <div className="pt-24 min-h-[100svh] bg-[#02040A] overflow-hidden">
-      {/* Top Banner / Hero */}
-      <section className="relative w-full overflow-hidden border-b border-[#00E5FF]/10">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#00E5FF]/10 via-[#02040A] to-[#02040A] pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-6 py-12 relative z-10">
+    <div className="pt-24 min-h-[100svh] bg-[#020408] overflow-hidden">
+      {/* Banner */}
+      <section className="relative w-full border-b border-white/[0.04]">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(0,229,255,0.05),transparent_55%)] pointer-events-none" />
+        <div className="max-w-6xl mx-auto px-5 sm:px-6 py-8 md:py-12 relative z-10">
           <Link
-            to="/sobre#equipe"
-            className="inline-flex items-center gap-2 text-sm font-mono text-[#8B949E] hover:text-[#00E5FF] transition-colors mb-8 group uppercase tracking-widest"
+            to="/sobre"
+            className="inline-flex items-center gap-1.5 text-white/28 hover:text-[#00E5FF] transition-colors mb-5 md:mb-7 group text-[13px]"
           >
-            <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            Retornar
+            <ChevronLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
+            Voltar
           </Link>
-          
+
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            transition={{ duration: 0.5 }}
           >
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-6 tracking-tight">
+            <h1
+              className="text-3xl md:text-5xl font-bold text-white mb-3.5 tracking-tight"
+              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+            >
               {founder.name}
             </h1>
-            <div className="flex flex-wrap items-center gap-4">
-              <span className="px-4 py-2 rounded-lg bg-[#00E5FF]/10 border border-[#00E5FF]/30 text-[#00E5FF] font-bold text-sm uppercase tracking-widest shadow-[0_0_15px_rgba(0,229,255,0.2)]">
+            <div className="flex flex-wrap items-center gap-2.5">
+              <span
+                className="px-3 py-1.5 rounded-md bg-[#00E5FF]/[0.06] border border-[#00E5FF]/[0.12] text-[#00E5FF] text-[10px] font-medium uppercase tracking-wider"
+                style={{ fontFamily: "'JetBrains Mono', monospace" }}
+              >
                 {founder.role}
               </span>
-              <span className="text-[#8B949E] font-mono text-sm flex items-center gap-2">
-                <Terminal className="w-4 h-4" />
-                <span className="text-white">Domínio:</span> {founder.area}
+              <span className="text-white/18 text-[12px] flex items-center gap-1.5" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+                <Terminal className="w-3.5 h-3.5" />
+                {founder.area}
               </span>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Main Content Area */}
-      <section className="max-w-7xl mx-auto px-6 py-16 grid lg:grid-cols-12 gap-12 relative z-10">
-        {/* Left Sidebar: Photo & Stats */}
+      {/* Content */}
+      <section className="max-w-6xl mx-auto px-5 sm:px-6 py-10 md:py-14 grid lg:grid-cols-12 gap-6 md:gap-10">
+        {/* Sidebar */}
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-          className="lg:col-span-4 flex flex-col gap-8"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.15 }}
+          className="lg:col-span-4 flex flex-col gap-5"
         >
-          <div className="relative w-full aspect-square rounded-3xl overflow-hidden border border-[#00E5FF]/20 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.8)] group">
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#02040A] z-10 pointer-events-none opacity-90" />
+          <div className="relative w-full aspect-square rounded-2xl overflow-hidden border border-white/[0.05] group">
             <ImageWithFallback
               src={founder.image}
               alt={founder.name}
-              className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700 transform group-hover:scale-105"
+              className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-600 opacity-55 group-hover:opacity-85 group-hover:scale-[1.03]"
             />
-            <div className="absolute bottom-6 left-6 z-20 flex items-center gap-3">
-              <div className="w-2.5 h-2.5 rounded-full bg-[#00E5FF] animate-pulse shadow-[0_0_10px_#00E5FF]" />
-              <span className="text-xs text-white uppercase font-mono font-bold tracking-widest bg-[#02040A]/80 border border-[#00E5FF]/20 px-3 py-1.5 rounded-md backdrop-blur-md">
-                Status: Online
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020408] z-10 pointer-events-none" />
+            <div className="absolute bottom-3.5 left-3.5 z-20 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_5px_rgba(52,211,153,0.7)] animate-pulse" />
+              <span
+                className="text-[9px] text-white/45 uppercase tracking-wider bg-[#020408]/80 px-2 py-0.5 rounded border border-white/[0.05]"
+                style={{ fontFamily: "'JetBrains Mono', monospace" }}
+              >
+                Online
               </span>
             </div>
           </div>
 
-          <div className="bg-[#0B0F1A]/80 backdrop-blur-md border border-[#00E5FF]/10 rounded-2xl p-8 hover:border-[#00E5FF]/30 transition-colors duration-500 shadow-[0_10px_30px_rgba(0,0,0,0.2)]">
-            <h3 className="text-white font-black text-xl mb-6 flex items-center gap-3 tracking-tight">
-              <Code className="w-6 h-6 text-[#00E5FF]" />
+          <div className="rounded-xl bg-white/[0.015] border border-white/[0.05] p-4 md:p-5">
+            <h3
+              className="text-white/65 font-semibold text-[14px] mb-3.5 flex items-center gap-2"
+              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+            >
+              <Code className="w-4 h-4 text-[#00E5FF]" />
               Stack Tecnológico
             </h3>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5">
               {founder.technologies.map((tech) => (
                 <span
                   key={tech}
-                  className="px-3 py-1.5 rounded-lg bg-[#02040A] border border-[#00E5FF]/10 text-[#8B949E] text-sm font-mono hover:border-[#00E5FF]/50 hover:text-[#00E5FF] hover:bg-[#00E5FF]/5 hover:-translate-y-0.5 transition-all duration-300 cursor-default"
+                  className="px-2.5 py-1 rounded-md bg-white/[0.02] border border-white/[0.05] text-white/28 text-[11px] hover:border-[#00E5FF]/15 hover:text-[#00E5FF]/55 transition-all duration-300 cursor-default"
+                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
                 >
                   {tech}
                 </span>
@@ -97,61 +100,62 @@ export function FounderProfile() {
           </div>
         </motion.div>
 
-        {/* Right Content: Bio, History, Roles */}
+        {/* Main */}
         <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
-          className="lg:col-span-8 flex flex-col gap-12"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.25 }}
+          className="lg:col-span-8 flex flex-col gap-6"
         >
-          {/* History */}
-          <div className="bg-[#0B0F1A]/40 border border-white/5 rounded-3xl p-8 md:p-10 relative overflow-hidden group hover:border-[#00E5FF]/20 transition-colors duration-500">
-            <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-[#00E5FF] to-transparent opacity-50" />
-            <h2 className="text-2xl md:text-3xl font-black text-white mb-6 tracking-tight">
+          <div className="rounded-xl bg-white/[0.015] border border-white/[0.05] p-5 md:p-7">
+            <h2
+              className="text-lg md:text-xl font-semibold text-white mb-3.5 tracking-tight"
+              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+            >
               Trajetória Profissional
             </h2>
-            <p className="text-[#8B949E] text-lg leading-relaxed group-hover:text-[#B0B3B8] transition-colors">
-              {founder.history}
-            </p>
+            <p className="text-white/30 text-[14px] leading-[1.7]">{founder.history}</p>
           </div>
 
-          {/* Responsibilities */}
           <div>
-            <h2 className="text-2xl md:text-3xl font-black text-white mb-8 flex items-center gap-3 tracking-tight">
-              <ShieldCheck className="w-8 h-8 text-[#00E5FF]" />
-              Responsabilidades Nucleares
+            <h2
+              className="text-lg md:text-xl font-semibold text-white mb-4 flex items-center gap-2 tracking-tight"
+              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+            >
+              <ShieldCheck className="w-5 h-5 text-[#00E5FF]" />
+              Responsabilidades
             </h2>
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid sm:grid-cols-2 gap-2.5">
               {founder.responsibilities.map((resp, i) => (
                 <div
                   key={i}
-                  className="flex items-start gap-4 bg-[#0B0F1A] p-5 rounded-2xl border border-white/5 hover:border-[#00E5FF]/30 hover:bg-[#00E5FF]/[0.02] transition-all duration-300 transform hover:-translate-y-1"
+                  className="flex items-start gap-2.5 p-3.5 rounded-xl bg-white/[0.015] border border-white/[0.05] hover:border-[#00E5FF]/[0.1] transition-colors duration-300"
                 >
-                  <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#0B0F1A] to-[#05070D] border border-[#00E5FF]/20 flex items-center justify-center flex-shrink-0 shadow-[0_0_10px_rgba(0,229,255,0.1)]">
-                    <Database className="w-4 h-4 text-[#00E5FF]" />
-                  </div>
-                  <span className="text-[#8B949E] font-medium pt-1 group-hover:text-white transition-colors">{resp}</span>
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#00E5FF]/35 mt-1.5 shrink-0" />
+                  <span className="text-white/32 text-[13px]">{resp}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Projects */}
           <div>
-            <h2 className="text-2xl md:text-3xl font-black text-white mb-8 flex items-center gap-3 tracking-tight">
-              <Layers className="w-8 h-8 text-[#00E5FF]" />
-              Projetos & Contribuições
+            <h2
+              className="text-lg md:text-xl font-semibold text-white mb-4 flex items-center gap-2 tracking-tight"
+              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+            >
+              <Layers className="w-5 h-5 text-[#00E5FF]" />
+              Projetos
             </h2>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2.5">
               {founder.projects.map((project, i) => (
                 <div
                   key={i}
-                  className="bg-gradient-to-r from-[#0B0F1A] to-[#02040A] p-6 rounded-2xl border border-white/5 border-l-4 border-l-[#00E5FF] flex items-center gap-5 hover:bg-[#00E5FF]/[0.02] hover:border-r-[#00E5FF]/20 transition-colors duration-300"
+                  className="flex items-center gap-3.5 p-3.5 rounded-xl bg-white/[0.015] border border-white/[0.05] border-l-2 border-l-[#00E5FF]/25"
                 >
-                  <div className="p-2 rounded-lg bg-[#00E5FF]/10 text-[#00E5FF]">
-                    <Briefcase className="w-5 h-5" />
+                  <div className="w-8 h-8 rounded-lg bg-[#00E5FF]/[0.07] flex items-center justify-center shrink-0">
+                    <Briefcase className="w-3.5 h-3.5 text-[#00E5FF]" />
                   </div>
-                  <span className="text-white font-bold tracking-wide">{project}</span>
+                  <span className="text-white/55 font-medium text-[13px]">{project}</span>
                 </div>
               ))}
             </div>

@@ -3,107 +3,100 @@ import { CheckCircle, AlertTriangle, RefreshCw } from "lucide-react";
 
 export function TermsOfUse() {
   return (
-    <section className="pt-32 pb-24 min-h-screen relative z-10 bg-[#05070D]">
-      <div className="absolute top-0 w-full h-96 bg-gradient-to-b from-[#00E5FF]/[0.02] to-transparent pointer-events-none" />
-      
-      <div className="max-w-4xl mx-auto px-6 relative">
+    <section className="pt-28 md:pt-36 pb-20 md:pb-24 min-h-screen relative bg-[#020408]">
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 w-full h-64 bg-gradient-to-b from-[#00E5FF]/[0.015] to-transparent" />
+      </div>
+
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-[1px] bg-[#00E5FF]" />
-            <span className="text-[#00E5FF] font-semibold text-sm uppercase tracking-widest">
-              Documento Legal
-            </span>
-          </div>
+          <span
+            className="inline-block text-[#00E5FF] text-[10px] font-medium uppercase tracking-[0.2em] bg-[#00E5FF]/[0.04] px-4 py-1.5 rounded-full border border-[#00E5FF]/10 mb-6"
+            style={{ fontFamily: "'JetBrains Mono', monospace" }}
+          >
+            Documento Legal
+          </span>
 
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-8">
+          <h1
+            className="text-3xl md:text-4xl font-bold text-white mb-6 tracking-tight"
+            style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+          >
             Termos de Uso
           </h1>
 
-          <div className="text-[#B0B3B8] leading-relaxed">
-            <p className="text-lg mb-6">
-              Ao acessar e utilizar o site da Terminal 404, o usuário declara que leu, compreendeu e concorda com os termos e condições descritos neste documento. Caso não concorde com qualquer parte destes termos, recomenda-se não utilizar os serviços disponibilizados pela plataforma.
+          <div className="text-white/35 leading-relaxed space-y-4 mb-10">
+            <p>
+              Ao acessar e utilizar o site da Terminal 404, o usuário declara que leu, compreendeu e concorda com os termos e condições descritos neste documento.
             </p>
-            <p className="text-lg mb-12">
-              A Terminal 404 atua como uma empresa de tecnologia e comunidade técnica, oferecendo conteúdos, projetos, informações e canais de comunicação voltados ao desenvolvimento de software, inovação tecnológica e colaboração profissional.
+            <p>
+              A Terminal 404 atua como uma empresa de tecnologia e comunidade técnica, oferecendo conteúdos, projetos e canais de comunicação voltados ao desenvolvimento de software e inovação tecnológica.
             </p>
+          </div>
 
-            <div className="space-y-8">
-              <div className="bg-[#0B0F1A] border border-[#00E5FF]/10 rounded-2xl p-8">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 rounded-lg bg-[#00E5FF]/10 flex items-center justify-center border border-[#00E5FF]/20 shrink-0">
-                    <CheckCircle className="w-6 h-6 text-[#00E5FF]" />
+          <div className="space-y-4">
+            {[
+              {
+                icon: CheckCircle,
+                title: "Responsabilidades do Usuário",
+                intro: "Ao utilizar o site, o usuário compromete-se a:",
+                items: [
+                  "Utilizar a plataforma de forma ética, responsável e legal",
+                  "Não realizar atividades ilícitas, ofensivas ou prejudiciais",
+                  "Não comprometer a segurança ou funcionamento do sistema",
+                  "Respeitar outros usuários, colaboradores e a empresa",
+                ],
+              },
+              {
+                icon: AlertTriangle,
+                title: "Limitação de Responsabilidade",
+                intro: "A Terminal 404 não se responsabiliza por:",
+                items: [
+                  "Uso indevido das informações disponibilizadas no site",
+                  "Interrupções temporárias do serviço por manutenção ou problemas técnicos",
+                  "Danos causados por terceiros ou por uso inadequado da plataforma",
+                ],
+              },
+              {
+                icon: RefreshCw,
+                title: "Atualizações e Modificações",
+                intro: "A empresa reserva-se o direito de:",
+                items: [
+                  "Atualizar conteúdos da plataforma",
+                  "Modificar funcionalidades ou serviços oferecidos",
+                  "Alterar estes Termos de Uso a qualquer momento, sem aviso prévio",
+                ],
+                footer: "O uso contínuo da plataforma após eventuais alterações implica na aceitação automática dos novos termos.",
+              },
+            ].map((section, idx) => (
+              <div key={idx} className="rounded-xl bg-white/[0.01] border border-white/[0.04] p-6 md:p-8">
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-9 h-9 rounded-lg bg-[#00E5FF]/[0.06] border border-[#00E5FF]/10 flex items-center justify-center shrink-0">
+                    <section.icon className="w-4 h-4 text-[#00E5FF]" />
                   </div>
-                  <h2 className="text-2xl font-bold text-white m-0">Responsabilidades do Usuário</h2>
+                  <h2 className="text-lg font-semibold text-white" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                    {section.title}
+                  </h2>
                 </div>
-                <p className="mb-6">Ao utilizar o site, o usuário compromete-se a:</p>
-                <ul className="space-y-4 list-none p-0 m-0">
-                  {[
-                    "Utilizar a plataforma de forma ética, responsável e legal", 
-                    "Não realizar atividades ilícitas, ofensivas ou prejudiciais", 
-                    "Não comprometer a segurança ou funcionamento do sistema", 
-                    "Respeitar outros usuários, colaboradores e a empresa"
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-[#00E5FF] mt-2 shrink-0" />
+                <p className="text-white/30 text-sm mb-4">{section.intro}</p>
+                <ul className="space-y-2.5">
+                  {section.items.map((item, i) => (
+                    <li key={i} className="flex items-start gap-3 text-sm text-white/35">
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#00E5FF]/40 mt-1.5 shrink-0" />
                       <span>{item}</span>
                     </li>
                   ))}
                 </ul>
-              </div>
-
-              <div className="bg-[#0B0F1A] border border-[#00E5FF]/10 rounded-2xl p-8">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 rounded-lg bg-[#00E5FF]/10 flex items-center justify-center border border-[#00E5FF]/20 shrink-0">
-                    <AlertTriangle className="w-6 h-6 text-[#00E5FF]" />
+                {section.footer && (
+                  <div className="border-t border-white/[0.04] mt-5 pt-4">
+                    <p className="text-xs italic text-white/20">{section.footer}</p>
                   </div>
-                  <h2 className="text-2xl font-bold text-white m-0">Limitação de Responsabilidade</h2>
-                </div>
-                <p className="mb-6">A Terminal 404 não se responsabiliza por:</p>
-                <ul className="space-y-4 list-none p-0 m-0">
-                  {[
-                    "Uso indevido das informações disponibilizadas no site", 
-                    "Interrupções temporárias do serviço por manutenção ou problemas técnicos", 
-                    "Danos causados por terceiros ou por uso inadequado da plataforma"
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-[#00E5FF] mt-2 shrink-0" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
+                )}
               </div>
-
-              <div className="bg-[#0B0F1A] border border-[#00E5FF]/10 rounded-2xl p-8">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 rounded-lg bg-[#00E5FF]/10 flex items-center justify-center border border-[#00E5FF]/20 shrink-0">
-                    <RefreshCw className="w-6 h-6 text-[#00E5FF]" />
-                  </div>
-                  <h2 className="text-2xl font-bold text-white m-0">Atualizações e Modificações</h2>
-                </div>
-                <p className="mb-6">A empresa reserva-se o direito de:</p>
-                <ul className="space-y-4 list-none p-0 mb-8">
-                  {[
-                    "Atualizar conteúdos da plataforma", 
-                    "Modificar funcionalidades ou serviços oferecidos", 
-                    "Alterar estes Termos de Uso a qualquer momento, sem aviso prévio"
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-[#00E5FF] mt-2 shrink-0" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="border-t border-[#00E5FF]/10 pt-6">
-                  <p className="text-sm italic text-[#B0B3B8]/80">
-                    O uso contínuo da plataforma após eventuais alterações implica na aceitação automática dos novos termos.
-                  </p>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </motion.div>
       </div>

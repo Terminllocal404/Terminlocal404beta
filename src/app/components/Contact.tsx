@@ -1,90 +1,103 @@
 import { motion } from "motion/react";
-import { Mail, Phone, Instagram, Github, Linkedin, MessageCircle, Terminal, ArrowRight } from "lucide-react";
+import { Mail, Phone, Instagram, Github, Linkedin, MessageCircle, ArrowUpRight } from "lucide-react";
+
+const socialLinks = [
+  { name: "Instagram", url: "https://www.instagram.com/terminal_4.0.4/", icon: Instagram },
+  { name: "WhatsApp", url: "https://wa.me/553291547944", icon: MessageCircle },
+  { name: "GitHub", url: "https://github.com/Terminllocal404", icon: Github },
+  { name: "LinkedIn", url: "https://www.linkedin.com/posts/terminal-404_terminal404-linkedin-activity-7419888008151261184-qFpP", icon: Linkedin },
+];
 
 export function Contact() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.15 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-  };
-
-  const socialLinks = [
-    { name: "Instagram", url: "https://www.instagram.com/terminal_4.0.4/", icon: Instagram },
-    { name: "WhatsApp", url: "https://wa.me/553291547944", icon: MessageCircle },
-    { name: "GitHub", url: "https://github.com/Terminllocal404", icon: Github },
-    { name: "LinkedIn", url: "https://www.linkedin.com/posts/terminal-404_terminal404-linkedin-activity-7419888008151261184-qFpP", icon: Linkedin },
-  ];
-
   return (
-    <section id="contato" className="py-24 md:py-32 relative z-10 bg-[#02040A] overflow-hidden">
-      <div className="absolute top-0 right-1/4 w-[800px] h-[800px] bg-[#00E5FF]/[0.02] rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#00E5FF]/20 to-transparent" />
-      
-      <div className="max-w-7xl mx-auto px-6 relative">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={containerVariants}
-          className="grid lg:grid-cols-2 gap-16"
-        >
-          {/* Informações */}
+    <section id="contato" className="py-20 md:py-32 relative bg-[#020408] overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/[0.05] to-transparent" />
+        <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-[#00E5FF]/[0.02] rounded-full blur-[120px]" />
+      </div>
+
+      <div className="max-w-6xl mx-auto px-5 sm:px-6 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-14">
+          {/* Left */}
           <div className="flex flex-col justify-center">
-            <motion.div variants={itemVariants} className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-[1px] bg-gradient-to-r from-transparent to-[#00E5FF]" />
-              <span className="text-[#00E5FF] font-mono font-semibold text-sm uppercase tracking-widest bg-[#00E5FF]/10 px-3 py-1 rounded-full border border-[#00E5FF]/20 flex items-center gap-2">
-                <Terminal className="w-4 h-4" /> Comunicação Direta
-              </span>
-            </motion.div>
-            
-            <motion.h2 variants={itemVariants} className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 leading-[1.1] tracking-tight">
-              Inicie um <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00E5FF] to-blue-500">projeto</span> conosco.
+            <motion.span
+              initial={{ opacity: 0, y: 8 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="inline-block text-[#00E5FF] text-[10px] md:text-[11px] font-medium uppercase tracking-[0.18em] bg-[#00E5FF]/[0.05] px-4 py-1.5 rounded-full border border-[#00E5FF]/12 mb-5 w-fit"
+              style={{ fontFamily: "'JetBrains Mono', monospace" }}
+            >
+              Contato
+            </motion.span>
+
+            <motion.h2
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-[1.75rem] sm:text-4xl md:text-[2.75rem] font-bold text-white mb-4 leading-[1.15] tracking-tight"
+              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+            >
+              Inicie um{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00E5FF] to-[#0080FF]">
+                projeto
+              </span>{" "}
+              conosco.
             </motion.h2>
-            
-            <motion.p variants={itemVariants} className="text-lg text-[#8B949E] mb-12 leading-relaxed">
-              Conecte-se com a Terminal 404 para discutir soluções arquiteturais de software, terceirização de desenvolvimento, ou para ingressar em nosso ecossistema técnico.
+
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-[15px] md:text-base text-white/35 mb-8 leading-[1.7]"
+            >
+              Discuta soluções de software, terceirização de desenvolvimento ou ingresse no nosso hub de inovação.
             </motion.p>
 
-            <motion.div variants={itemVariants} className="space-y-4 mb-12">
-              <div className="group flex items-center gap-5 p-5 rounded-2xl bg-[#0B0F1A] border border-[#00E5FF]/10 hover:border-[#00E5FF]/40 hover:bg-[#00E5FF]/[0.02] transition-all duration-300">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#0B0F1A] to-[#05070D] flex items-center justify-center border border-[#00E5FF]/20 text-[#00E5FF] shrink-0 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(0,229,255,0.2)] transition-all duration-500">
-                  <Mail className="w-6 h-6" />
-                </div>
-                <div>
-                  <h4 className="text-white font-bold mb-1 tracking-wide">E-mail Corporativo</h4>
-                  <a href="mailto:terminallocal404@gmail.com" className="text-[#8B949E] hover:text-[#00E5FF] transition-colors font-mono text-sm">
-                    terminallocal404@gmail.com
-                  </a>
-                </div>
-              </div>
-
-              <div className="group flex items-center gap-5 p-5 rounded-2xl bg-[#0B0F1A] border border-[#00E5FF]/10 hover:border-[#00E5FF]/40 hover:bg-[#00E5FF]/[0.02] transition-all duration-300">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#0B0F1A] to-[#05070D] flex items-center justify-center border border-[#00E5FF]/20 text-[#00E5FF] shrink-0 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(0,229,255,0.2)] transition-all duration-500">
-                  <Phone className="w-6 h-6" />
-                </div>
-                <div>
-                  <h4 className="text-white font-bold mb-1 tracking-wide">Telefone Oficial</h4>
-                  <a href="tel:+553291547944" className="text-[#8B949E] hover:text-[#00E5FF] transition-colors font-mono text-sm">
-                    (32) 9154-7944
-                  </a>
-                </div>
-              </div>
+            {/* Contact info */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="space-y-2.5 mb-8"
+            >
+              {[
+                { icon: Mail, title: "E-mail Corporativo", value: "terminallocal404@gmail.com", href: "mailto:terminallocal404@gmail.com" },
+                { icon: Phone, title: "Telefone Oficial", value: "(32) 9154-7944", href: "tel:+553291547944" },
+              ].map((item) => (
+                <a
+                  key={item.title}
+                  href={item.href}
+                  className="group flex items-center gap-3.5 p-4 rounded-xl bg-white/[0.015] border border-white/[0.05] hover:border-[#00E5FF]/[0.12] hover:bg-[#00E5FF]/[0.02] transition-all duration-300 active:scale-[0.99]"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-[#00E5FF]/[0.07] border border-[#00E5FF]/[0.12] flex items-center justify-center text-[#00E5FF] shrink-0 group-hover:shadow-[0_0_14px_rgba(0,229,255,0.1)] transition-shadow duration-300">
+                    <item.icon className="w-4 h-4" />
+                  </div>
+                  <div className="min-w-0">
+                    <h4 className="text-white/65 font-medium text-[13px] mb-0.5">{item.title}</h4>
+                    <span
+                      className="text-white/28 group-hover:text-[#00E5FF]/60 transition-colors text-[12px] block truncate"
+                      style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                    >
+                      {item.value}
+                    </span>
+                  </div>
+                </a>
+              ))}
             </motion.div>
 
-            {/* Redes Sociais */}
-            <motion.div variants={itemVariants}>
-              <h4 className="text-[#6E7681] font-mono font-semibold text-sm mb-6 uppercase tracking-widest flex items-center gap-4">
-                Redes Sociais
-                <div className="flex-1 h-[1px] bg-gradient-to-r from-[#00E5FF]/20 to-transparent" />
-              </h4>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {/* Social */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="flex items-center gap-3 mb-3.5">
+                <span className="text-white/12 text-[10px] uppercase tracking-wider" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+                  Redes
+                </span>
+                <div className="flex-1 h-px bg-white/[0.04]" />
+              </div>
+              <div className="flex items-center gap-2">
                 {socialLinks.map((social) => {
                   const Icon = social.icon;
                   return (
@@ -93,14 +106,10 @@ export function Contact() {
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex flex-col items-center gap-3 p-5 rounded-2xl bg-[#05070D] border border-[#00E5FF]/10 hover:bg-[#0B0F1A] hover:border-[#00E5FF]/40 hover:-translate-y-2 hover:shadow-[0_15px_30px_-10px_rgba(0,229,255,0.15)] transition-all duration-500 group"
+                      className="w-10 h-10 rounded-lg bg-white/[0.025] border border-white/[0.05] flex items-center justify-center text-white/22 hover:text-[#00E5FF] hover:border-[#00E5FF]/[0.15] hover:bg-[#00E5FF]/[0.04] active:scale-95 transition-all duration-300"
+                      title={social.name}
                     >
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0B0F1A] to-transparent flex items-center justify-center text-[#8B949E] border border-[#00E5FF]/10 group-hover:text-[#02040A] group-hover:bg-[#00E5FF] group-hover:border-[#00E5FF] transition-all duration-500">
-                        <Icon className="w-6 h-6" />
-                      </div>
-                      <span className="text-xs font-bold text-[#8B949E] uppercase tracking-wide group-hover:text-white transition-colors">
-                        {social.name}
-                      </span>
+                      <Icon className="w-4 h-4" />
                     </a>
                   );
                 })}
@@ -108,42 +117,53 @@ export function Contact() {
             </motion.div>
           </div>
 
-          {/* Call to Action - WhatsApp */}
-          <motion.div variants={itemVariants} className="flex flex-col justify-center">
-            <div className="bg-[#0B0F1A]/80 backdrop-blur-xl p-8 md:p-12 rounded-3xl border border-[#00E5FF]/20 shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden group h-full flex flex-col items-center text-center justify-center">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-[#00E5FF]/10 blur-[80px] rounded-full pointer-events-none group-hover:bg-[#00E5FF]/20 transition-colors duration-700" />
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#00E5FF]/50 to-transparent" />
-              
-              <div className="w-24 h-24 rounded-full bg-[#00E5FF]/10 flex items-center justify-center mb-8 border border-[#00E5FF]/30 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(0,229,255,0.3)] transition-all duration-500">
-                <MessageCircle className="w-12 h-12 text-[#00E5FF]" />
+          {/* Right CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="flex flex-col justify-center"
+          >
+            <div className="relative rounded-2xl p-7 md:p-10 bg-white/[0.015] border border-white/[0.05] text-center flex flex-col items-center overflow-hidden">
+              {/* Top glow */}
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(0,229,255,0.06),transparent_55%)] pointer-events-none" />
+
+              <div className="w-16 h-16 md:w-18 md:h-18 rounded-2xl bg-[#00E5FF]/[0.07] border border-[#00E5FF]/[0.12] flex items-center justify-center mb-6 relative z-10">
+                <MessageCircle className="w-8 h-8 text-[#00E5FF]" />
               </div>
 
-              <h3 className="text-3xl font-black text-white mb-4 relative tracking-tight">
+              <h3
+                className="text-[22px] md:text-2xl font-semibold text-white mb-2.5 tracking-tight relative z-10"
+                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+              >
                 Atendimento <span className="text-[#00E5FF]">Imediato</span>
               </h3>
-              
-              <p className="text-[#8B949E] mb-10 leading-relaxed max-w-md mx-auto">
-                Nossa equipe está pronta para conversar. Clique abaixo para ser redirecionado diretamente ao nosso WhatsApp oficial e falar com um de nossos arquitetos.
+
+              <p className="text-[13px] md:text-sm text-white/28 mb-7 leading-[1.65] max-w-sm relative z-10">
+                Clique abaixo para ser redirecionado ao nosso WhatsApp oficial e conversar com a equipe.
               </p>
-              
+
               <a
                 href="https://wa.me/553291547944"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto px-10 py-5 bg-gradient-to-r from-[#00E5FF] to-blue-500 hover:from-white hover:to-white text-[#02040A] font-black uppercase tracking-widest rounded-xl transition-all duration-500 flex items-center justify-center gap-3 hover:shadow-[0_0_30px_rgba(0,229,255,0.4)] transform hover:-translate-y-1"
+                className="group w-full sm:w-auto h-13 px-8 bg-[#00E5FF] text-[#020408] font-semibold text-[14px] rounded-xl flex items-center justify-center gap-2.5 hover:bg-[#2AECFF] hover:shadow-[0_4px_30px_rgba(0,229,255,0.3)] active:scale-[0.97] transition-all duration-300 relative z-10"
               >
-                <MessageCircle className="w-6 h-6" />
+                <MessageCircle className="w-[18px] h-[18px]" />
                 Falar com a equipe
-                <ArrowRight className="w-5 h-5 ml-2 opacity-70" />
+                <ArrowUpRight className="w-4 h-4 opacity-50" />
               </a>
 
-              <div className="mt-8 flex items-center gap-2 text-xs font-mono text-[#6E7681]">
-                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                Atendimento em horário comercial
+              <div className="mt-5 flex items-center gap-2 text-[10px] text-white/18 relative z-10" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_5px_rgba(52,211,153,0.6)]" />
+                </span>
+                ONLINE AGORA
               </div>
             </div>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
