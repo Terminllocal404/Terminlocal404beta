@@ -10,26 +10,26 @@ import {
 } from "lucide-react";
 
 const features = [
-  { icon: Cpu, title: "Alta Performance", desc: "Sistemas otimizados para alto trafego e baixa latencia com arquitetura distribuida." },
-  { icon: ShieldCheck, title: "Padrao Enterprise", desc: "Arquitetura segura, codigo limpo, escalavel e com cobertura completa de testes." },
-  { icon: Target, title: "Foco em Resultados", desc: "Solucoes 100% alinhadas aos objetivos estrategicos do seu negocio." },
-  { icon: Zap, title: "Entrega Agil", desc: "Sprints semanais com feedback continuo e entregas incrementais." },
-  { icon: Globe, title: "Alcance Global", desc: "Infraestrutura cloud com deploy multi-regiao e CDN otimizada." },
-  { icon: Layers, title: "Arquitetura Modular", desc: "Componentes reutilizaveis e microservicos para maxima flexibilidade." },
+  { icon: Cpu, title: "Alta Performance", desc: "Sistemas otimizados para alto tráfego e baixa latência com arquitetura distribuída." },
+  { icon: ShieldCheck, title: "Padrão Enterprise", desc: "Arquitetura segura, código limpo, escalável e com cobertura completa de testes." },
+  { icon: Target, title: "Foco em Resultados", desc: "Soluções 100% alinhadas aos objetivos estratégicos do seu negócio." },
+  { icon: Zap, title: "Entrega Ágil", desc: "Sprints semanais com feedback contínuo e entregas incrementais." },
+  { icon: Globe, title: "Alcance Global", desc: "Infraestrutura cloud com deploy multi-região e CDN otimizada." },
+  { icon: Layers, title: "Arquitetura Modular", desc: "Componentes reutilizáveis e microsserviços para máxima flexibilidade." },
 ];
 
 const timeline = [
-  { year: "2024", title: "Fundacao", desc: "Criacao da Terminal 404 como hub de inovacao e engenharia de software." },
-  { year: "2024", title: "Primeiros Projetos", desc: "Entrega dos primeiros sistemas corporativos e aplicacoes web." },
-  { year: "2025", title: "Comunidade Dev", desc: "Lancamento da comunidade de desenvolvedores no Discord." },
-  { year: "2025", title: "Expansao", desc: "Ampliacao da equipe e portfolio de servicos oferecidos." },
+  { year: "2024", title: "Fundação", desc: "Criação da Terminal 404 como hub de inovação e engenharia de software." },
+  { year: "2024", title: "Primeiros Projetos", desc: "Entrega dos primeiros sistemas corporativos e aplicações web." },
+  { year: "2025", title: "Comunidade Dev", desc: "Lançamento da comunidade de desenvolvedores no Discord." },
+  { year: "2025", title: "Expansão", desc: "Ampliação da equipe e portfólio de serviços oferecidos." },
 ];
 
 const stats = [
   { icon: Code2, value: "50+", label: "Projetos Entregues" },
   { icon: Users, value: "40+", label: "Clientes Atendidos" },
   { icon: TrendingUp, value: "99.9%", label: "Uptime Garantido" },
-  { icon: Award, value: "100%", label: "Satisfacao" },
+  { icon: Award, value: "100%", label: "Satisfação" },
 ];
 
 export function AboutPage() {
@@ -69,14 +69,14 @@ export function AboutPage() {
           <div className="grid md:grid-cols-2 gap-5 md:gap-6">
             {[
               {
-                tag: "MISSAO",
-                title: "Nossa Missao",
-                desc: "Transformar ideias em solucoes digitais de alto impacto, entregando software de qualidade com arquitetura escalavel, codigo limpo e foco total no resultado do cliente."
+                tag: "MISSÃO",
+                title: "Nossa Missão",
+                desc: "Transformar ideias em soluções digitais de alto impacto, entregando software de qualidade com arquitetura escalável, código limpo e foco total no resultado do cliente."
               },
               {
-                tag: "VISAO",
-                title: "Nossa Visao",
-                desc: "Ser referencia em engenharia de software e inovacao tecnologica, construindo um ecossistema de excelencia tecnica que impulsione negocios e forme profissionais de alto nivel."
+                tag: "VISÃO",
+                title: "Nossa Visão",
+                desc: "Ser referência em engenharia de software e inovação tecnológica, construindo um ecossistema de excelência técnica que impulsione negócios e forme profissionais de alto nível."
               },
             ].map((item, idx) => (
               <motion.div
@@ -98,12 +98,12 @@ export function AboutPage() {
                     {item.tag}
                   </span>
                   <h3
-                    className="text-white/90 font-semibold text-xl md:text-2xl mb-4 tracking-tight group-hover:text-white transition-colors"
+                    className="text-white font-semibold text-xl md:text-2xl mb-4 tracking-tight transition-colors"
                     style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                   >
                     {item.title}
                   </h3>
-                  <p className="text-white/30 text-[14px] md:text-[15px] leading-[1.7] group-hover:text-white/40 transition-colors">
+                  <p className="text-white text-[14px] md:text-[15px] leading-[1.7] transition-colors">
                     {item.desc}
                   </p>
                 </div>
@@ -146,9 +146,9 @@ export function AboutPage() {
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-[15px] md:text-base text-white/35 leading-relaxed"
+              className="text-[15px] md:text-base text-white leading-relaxed"
             >
-              Combinamos excelencia tecnica, processos ageis e foco total em resultados para entregar solucoes que realmente fazem diferenca.
+              Combinamos excelência técnica, processos ágeis e foco total em resultados para entregar soluções que realmente fazem diferença.
             </motion.p>
           </div>
 
@@ -166,10 +166,10 @@ export function AboutPage() {
                   <item.icon className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="text-white/80 font-semibold text-[15px] mb-1 group-hover:text-white transition-colors" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  <h4 className="text-white font-semibold text-[15px] mb-1 transition-colors" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                     {item.title}
                   </h4>
-                  <p className="text-white/25 text-[13px] leading-[1.6]">{item.desc}</p>
+                  <p className="text-white text-[13px] leading-[1.6]">{item.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -198,7 +198,7 @@ export function AboutPage() {
                   <div className="text-[2rem] md:text-[2.5rem] font-bold text-white mb-1 tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                     {stat.value}
                   </div>
-                  <div className="text-white/50 text-[13px] font-medium" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  <div className="text-white text-[13px] font-medium" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                     {stat.label}
                   </div>
                 </div>
@@ -268,12 +268,12 @@ export function AboutPage() {
                         {item.year}
                       </span>
                       <h3
-                        className="text-white/85 font-semibold text-[16px] mb-2 tracking-tight"
+                        className="text-white font-semibold text-[16px] mb-2 tracking-tight"
                         style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                       >
                         {item.title}
                       </h3>
-                      <p className="text-white/28 text-[13px] leading-[1.6]">{item.desc}</p>
+                      <p className="text-white text-[13px] leading-[1.6]">{item.desc}</p>
                     </div>
                   </div>
 
@@ -311,11 +311,11 @@ export function AboutPage() {
               >
                 Quer fazer parte dessa{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00E5FF] to-[#0080FF]">
-                  historia?
+                  história?
                 </span>
               </h3>
-              <p className="text-white/30 text-[14px] md:text-base mb-7 max-w-xl mx-auto leading-relaxed">
-                Entre em contato para discutir seu projeto ou conheca nossa comunidade de desenvolvedores.
+              <p className="text-white text-[14px] md:text-base mb-7 max-w-xl mx-auto leading-relaxed">
+                Entre em contato para discutir seu projeto ou conheça nossa comunidade de desenvolvedores.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                 <a

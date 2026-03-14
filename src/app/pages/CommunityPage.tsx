@@ -7,49 +7,49 @@ import {
 } from "lucide-react";
 
 const benefits = [
-  { name: "Projetos Colaborativos", icon: Code2, desc: "Construa solucoes reais em equipe com devs de todos os niveis, adquirindo experiencia pratica." },
+  { name: "Projetos Colaborativos", icon: Code2, desc: "Construa soluções reais em equipe com devs de todos os níveis, adquirindo experiência prática." },
   { name: "Networking", icon: Network, desc: "Conecte-se com desenvolvedores, engenheiros e profissionais de tecnologia de todo o Brasil." },
-  { name: "Aprendizado Continuo", icon: BookOpen, desc: "Evolua compartilhando conhecimento, participando de workshops e sessoes tecnicas." },
-  { name: "Experiencia Real", icon: Briefcase, desc: "Projetos que fazem diferenca no portfolio e preparam voce para desafios do mercado." },
-  { name: "Mentoria Tecnica", icon: GraduationCap, desc: "Receba orientacao de desenvolvedores seniors e lideres tecnicos experientes." },
-  { name: "Open Source", icon: GitBranch, desc: "Contribua para projetos open source e construa sua reputacao na comunidade dev." },
+  { name: "Aprendizado Contínuo", icon: BookOpen, desc: "Evolua compartilhando conhecimento, participando de workshops e sessões técnicas." },
+  { name: "Experiência Real", icon: Briefcase, desc: "Projetos que fazem diferença no portfólio e preparam você para desafios do mercado." },
+  { name: "Mentoria Técnica", icon: GraduationCap, desc: "Receba orientação de desenvolvedores seniors e líderes técnicos experientes." },
+  { name: "Open Source", icon: GitBranch, desc: "Contribua para projetos open source e construa sua reputação na comunidade dev." },
 ];
 
 const levels = [
   {
     title: "Iniciante",
     tag: "JUNIOR",
-    desc: "Ideal para quem esta comecando na programacao e quer participar de projetos reais com suporte.",
+    desc: "Ideal para quem está começando na programação e quer participar de projetos reais com suporte.",
     features: ["Mentoria dedicada", "Projetos guiados", "Code reviews"],
     color: "from-emerald-500/15 to-teal-500/5",
   },
   {
-    title: "Intermediario",
+    title: "Intermediário",
     tag: "MID-LEVEL",
-    desc: "Para devs que ja possuem base solida e querem evoluir com projetos desafiadores.",
-    features: ["Projetos complexos", "Autonomia tecnica", "Tech talks"],
+    desc: "Para devs que já possuem base sólida e querem evoluir com projetos desafiadores.",
+    features: ["Projetos complexos", "Autonomia técnica", "Tech talks"],
     color: "from-blue-500/15 to-indigo-500/5",
   },
   {
-    title: "Avancado",
+    title: "Avançado",
     tag: "SENIOR",
     desc: "Desenvolvedores experientes que querem liderar, mentorar e contribuir com a comunidade.",
-    features: ["Lideranca de projetos", "Mentoria de juniors", "Arquitetura"],
+    features: ["Liderança de projetos", "Mentoria de juniors", "Arquitetura"],
     color: "from-purple-500/15 to-pink-500/5",
   },
 ];
 
 const interviewQuestions = [
-  "O que voce faz atualmente na area de tecnologia",
-  "Quais sao suas habilidades ou linguagens de programacao",
-  "Em quais areas ou projetos gostaria de contribuir",
-  "Qual seu nivel de experiencia atual",
+  "O que você faz atualmente na área de tecnologia",
+  "Quais são suas habilidades ou linguagens de programação",
+  "Em quais áreas ou projetos gostaria de contribuir",
+  "Qual seu nível de experiência atual",
 ];
 
 const communityStats = [
   { icon: Users, value: "100+", label: "Membros Ativos" },
   { icon: Code2, value: "15+", label: "Projetos em Andamento" },
-  { icon: Trophy, value: "30+", label: "Projetos Concluidos" },
+  { icon: Trophy, value: "30+", label: "Projetos Concluídos" },
   { icon: Zap, value: "24/7", label: "Comunidade Ativa" },
 ];
 
@@ -60,7 +60,7 @@ export function CommunityPage() {
         badge="Comunidade"
         title="Comunidade de"
         highlight="Desenvolvedores"
-        description="Aberta para programadores de todos os niveis que desejam participar de projetos reais, evoluir em conjunto e construir networking na area de tecnologia."
+        description="Aberta para programadores de todos os níveis que desejam participar de projetos reais, evoluir em conjunto e construir networking na área de tecnologia."
       >
         <a
           href="https://discord.gg/NxjyjR9Z"
@@ -135,9 +135,9 @@ export function CommunityPage() {
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-[15px] md:text-base text-white/35 leading-relaxed"
+              className="text-[15px] md:text-base text-white leading-relaxed"
             >
-              Um ecossistema completo para voce evoluir como desenvolvedor e construir projetos que fazem diferenca.
+              Um ecossistema completo para você evoluir como desenvolvedor e construir projetos que fazem diferença.
             </motion.p>
           </div>
 
@@ -157,12 +157,12 @@ export function CommunityPage() {
                     <card.icon className="w-4.5 h-4.5 text-[#00E5FF]" />
                   </div>
                   <h3
-                    className="text-white/80 font-semibold text-[15px] mb-2 group-hover:text-white transition-colors tracking-tight"
+                    className="text-white font-semibold text-[15px] mb-2 tracking-tight transition-colors"
                     style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                   >
                     {card.name}
                   </h3>
-                  <p className="text-white/25 text-[13px] leading-[1.6]">{card.desc}</p>
+                  <p className="text-white text-[13px] leading-[1.6]">{card.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -185,7 +185,7 @@ export function CommunityPage() {
               style={{ fontFamily: "'JetBrains Mono', monospace" }}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-[#00E5FF] shadow-[0_0_6px_rgba(0,229,255,0.6)]" />
-              Niveis de Participacao
+              Níveis de Participação
             </motion.span>
             <motion.h2
               initial={{ opacity: 0, y: 16 }}
@@ -196,7 +196,7 @@ export function CommunityPage() {
             >
               Para todos os{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00E5FF] to-[#0080FF]">
-                niveis
+                níveis
               </span>
             </motion.h2>
           </div>
@@ -217,7 +217,7 @@ export function CommunityPage() {
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-5">
                     <h3
-                      className="text-white/85 font-semibold text-lg group-hover:text-white transition-colors tracking-tight"
+                      className="text-white font-semibold text-lg tracking-tight transition-colors"
                       style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                     >
                       {level.title}
@@ -230,13 +230,13 @@ export function CommunityPage() {
                     </span>
                   </div>
 
-                  <p className="text-white/28 text-[13px] leading-[1.6] mb-5">{level.desc}</p>
+                  <p className="text-white text-[13px] leading-[1.6] mb-5">{level.desc}</p>
 
                   <div className="space-y-2 pt-4 border-t border-white/[0.04]">
                     {level.features.map((feature, i) => (
                       <div key={i} className="flex items-center gap-2">
                         <CheckCircle2 className="w-3.5 h-3.5 text-[#00E5FF]/50 shrink-0" />
-                        <span className="text-white/30 text-[12px]" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+                        <span className="text-white text-[12px]" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
                           {feature}
                         </span>
                       </div>
@@ -299,22 +299,22 @@ export function CommunityPage() {
               <div className="space-y-4">
                 {[
                   { num: "01", title: "Entre no Discord", desc: "Acesse nosso servidor oficial pelo link de convite." },
-                  { num: "02", title: "Apresentacao", desc: "Participe de uma breve call para nos conhecermos melhor." },
-                  { num: "03", title: "Direcionamento", desc: "Voce sera encaminhado para projetos adequados ao seu nivel." },
+                  { num: "02", title: "Apresentação", desc: "Participe de uma breve call para nos conhecermos melhor." },
+                  { num: "03", title: "Direcionamento", desc: "Você será encaminhado para projetos adequados ao seu nível." },
                   { num: "04", title: "Comece a contribuir", desc: "Inicie sua jornada colaborando em projetos reais." },
                 ].map((step) => (
                   <div key={step.num} className="flex items-start gap-3.5">
                     <span
-                      className="text-[#00E5FF]/30 text-[13px] font-bold tracking-wider mt-0.5 shrink-0"
+                      className="text-[#00E5FF]/50 text-[13px] font-bold tracking-wider mt-0.5 shrink-0"
                       style={{ fontFamily: "'JetBrains Mono', monospace" }}
                     >
                       {step.num}
                     </span>
                     <div>
-                      <h4 className="text-white/70 font-semibold text-[14px] mb-0.5" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                      <h4 className="text-white font-semibold text-[14px] mb-0.5" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                         {step.title}
                       </h4>
-                      <p className="text-white/25 text-[13px] leading-[1.55]">{step.desc}</p>
+                      <p className="text-white text-[13px] leading-[1.55]">{step.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -323,21 +323,21 @@ export function CommunityPage() {
 
             <div className="bg-[#060A14] rounded-xl p-5 md:p-6 border border-white/[0.05] relative z-10">
               <h4
-                className="text-white/70 font-semibold text-[15px] mb-4 flex items-center gap-2"
+                className="text-white font-semibold text-[15px] mb-4 flex items-center gap-2"
                 style={{ fontFamily: "'Space Grotesk', sans-serif" }}
               >
-                <MessageSquare className="text-[#00E5FF] w-4 h-4" /> Na apresentacao:
+                <MessageSquare className="text-[#00E5FF] w-4 h-4" /> Na apresentação:
               </h4>
               <ul className="space-y-2.5 mb-5">
                 {interviewQuestions.map((q, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5 text-[13px] text-white/35 bg-white/[0.02] p-3 rounded-lg border border-white/[0.03]">
+                  <li key={idx} className="flex items-start gap-2.5 text-[13px] text-white bg-white/[0.02] p-3 rounded-lg border border-white/[0.03]">
                     <div className="w-1.5 h-1.5 rounded-full bg-[#00E5FF] mt-1.5 shrink-0 shadow-[0_0_4px_rgba(0,229,255,0.4)]" />
                     <span>{q}</span>
                   </li>
                 ))}
               </ul>
-              <div className="p-3 rounded-lg bg-[#00E5FF]/[0.03] border border-[#00E5FF]/[0.08] text-white/25 text-[12px] leading-[1.55]">
-                <span className="text-[#00E5FF] font-medium">Objetivo:</span> Entender seu perfil para direciona-lo aos projetos mais adequados ao seu momento.
+              <div className="p-3 rounded-lg bg-[#00E5FF]/[0.03] border border-[#00E5FF]/[0.08] text-white text-[12px] leading-[1.55]">
+                <span className="text-[#00E5FF] font-medium">Objetivo:</span> Entender seu perfil para direcioná-lo aos projetos mais adequados ao seu momento.
               </div>
             </div>
           </motion.div>

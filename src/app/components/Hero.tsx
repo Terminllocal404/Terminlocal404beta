@@ -63,24 +63,24 @@ export function Hero() {
         >
           {/* Official Logo with animated glow */}
           <div className="relative flex justify-center items-center mb-6 md:mb-8 w-full z-20">
-            <div className="absolute w-32 h-32 md:w-44 md:h-44 rounded-full bg-[#00E5FF]/[0.06] blur-[60px] animate-[pulse-glow_4s_ease-in-out_infinite]" />
+            <div className="absolute w-32 h-32 md:w-44 md:h-44 rounded-full bg-[#00E5FF]/[0.15] blur-[60px] animate-[pulse-glow_4s_ease-in-out_infinite]" />
             <ImageWithFallback
               src="https://available-aquamarine-lziqbpkvhg.edgeone.app/Untitled_design_1.png"
               alt="Terminal 404 Official Logo"
-              className="w-auto h-32 md:h-40 lg:h-48 object-contain drop-shadow-[0_0_30px_rgba(0,229,255,0.25)] relative z-10"
+              className="w-auto h-40 md:h-48 lg:h-56 object-contain drop-shadow-[0_0_35px_rgba(0,229,255,0.6)] relative z-10"
             />
           </div>
 
           {/* Company Name with layered glow */}
           <h1
-            className="text-[2.5rem] leading-[1.1] sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5.5rem] font-bold tracking-[0.04em] text-white mb-3 md:mb-4 relative"
+            className="text-[2.5rem] leading-[1.1] sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5.5rem] font-bold tracking-[0.04em] text-white mb-3 md:mb-4 relative text-center flex flex-col items-center"
             style={{ fontFamily: "'Space Grotesk', sans-serif" }}
           >
             <span className="relative inline-block">
               TERMINAL
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00E5FF] to-[#0080FF]"> 404</span>
               {/* Text glow */}
-              <span className="absolute inset-0 blur-3xl opacity-20 bg-gradient-to-r from-[#00E5FF] to-[#0080FF] [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] pointer-events-none" aria-hidden>
+              <span className="absolute inset-0 blur-3xl opacity-40 bg-gradient-to-r from-[#00E5FF] to-[#0080FF] [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] pointer-events-none" aria-hidden>
                 TERMINAL 404
               </span>
             </span>
@@ -119,7 +119,7 @@ export function Hero() {
             href="https://wa.me/553291547944?text=Seja%20bem-vindo!%20Faça%20o%20seu%20projeto%20conosco."
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative h-14 px-8 bg-gradient-to-r from-[#00E5FF] to-[#00B8D4] text-[#020408] font-semibold text-[14px] tracking-wide flex items-center justify-center gap-2.5 hover:shadow-[0_4px_35px_rgba(0,229,255,0.4)] active:scale-[0.97] transition-all duration-300"
+            className="group relative h-14 px-8 rounded-full bg-gradient-to-r from-[#00E5FF] to-[#00B8D4] text-[#020408] font-semibold text-[14px] tracking-wide flex items-center justify-center gap-2.5 hover:shadow-[0_4px_35px_rgba(0,229,255,0.4)] active:scale-[0.97] transition-all duration-300"
           >
             <Sparkles className="w-4 h-4 relative z-10" />
             <span className="relative z-10">Iniciar Projeto</span>

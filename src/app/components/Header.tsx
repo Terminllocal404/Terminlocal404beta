@@ -25,9 +25,9 @@ export function Header() {
   }, [mobileMenuOpen]);
 
   const navLinks = [
-    { name: "Inicio", href: "/" },
+    { name: "Início", href: "/" },
     { name: "Sobre", href: "/sobre" },
-    { name: "Solucoes", href: "/servicos" },
+    { name: "Soluções", href: "/servicos" },
     { name: "Projetos", href: "/projetos" },
     { name: "Comunidade", href: "/comunidade" },
     { name: "FAQ", href: "/faq" },
@@ -51,21 +51,23 @@ export function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className={`flex items-center justify-between transition-all duration-500 ${scrolled ? "h-16" : "h-20 md:h-24"}`}>
             {/* Mobile hamburger */}
-            <button
-              className="lg:hidden w-11 h-11 flex items-center justify-center rounded-xl bg-white/[0.04] border border-white/[0.06] text-white/50 active:scale-95 transition-all"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Menu"
-            >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
+            <div className="lg:hidden flex items-center">
+              <button
+                className="w-11 h-11 flex items-center justify-center rounded-xl bg-white/[0.04] border border-white/[0.06] text-white/50 active:scale-95 transition-all"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label="Menu"
+              >
+                {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </button>
+            </div>
 
             {/* Desktop Nav Center */}
-            <nav className="hidden lg:flex items-center justify-center gap-1 flex-1">
+            <nav className="hidden lg:flex items-center justify-center gap-2 flex-1">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   to={link.href}
-                  className={`relative px-4 py-2 rounded-lg text-[13px] font-medium tracking-wide transition-all duration-300 ${
+                  className={`relative px-5 py-2.5 rounded-lg text-[15px] font-medium tracking-wide transition-all duration-300 ${
                     isActive(link.href)
                       ? "text-[#00E5FF]"
                       : "text-white/40 hover:text-white/80"
@@ -75,19 +77,19 @@ export function Header() {
                   {isActive(link.href) && (
                     <motion.div
                       layoutId="active-nav"
-                      className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-5 h-[2px] rounded-full bg-[#00E5FF] shadow-[0_0_10px_rgba(0,229,255,0.6)]"
+                      className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-6 h-[2px] rounded-full bg-[#00E5FF] shadow-[0_0_10px_rgba(0,229,255,0.6)]"
                       transition={{ type: "spring", stiffness: 400, damping: 30 }}
                     />
                   )}
                 </Link>
               ))}
-              <div className="w-px h-5 bg-white/[0.06] mx-2" />
+              <div className="w-px h-6 bg-white/[0.06] mx-3" />
               <Link
                 to="/solicitacao"
-                className="group px-5 py-2.5 rounded-xl text-[12px] font-semibold uppercase tracking-[0.12em] bg-gradient-to-r from-[#00E5FF] to-[#00B8D4] text-[#020408] hover:shadow-[0_0_24px_rgba(0,229,255,0.35)] active:scale-[0.97] transition-all duration-300 flex items-center gap-2"
+                className="group px-6 py-3 rounded-xl text-[13px] font-semibold uppercase tracking-[0.12em] bg-gradient-to-r from-[#00E5FF] to-[#00B8D4] text-[#020408] hover:shadow-[0_0_24px_rgba(0,229,255,0.35)] active:scale-[0.97] transition-all duration-300 flex items-center gap-2"
               >
                 Iniciar Projeto
-                <ArrowUpRight className="w-3.5 h-3.5 opacity-70 group-hover:opacity-100 transition-opacity" />
+                <ArrowUpRight className="w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity" />
               </Link>
             </nav>
 
@@ -118,15 +120,18 @@ export function Header() {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.05, duration: 0.3 }}
-                className="flex items-center gap-3 mb-8 px-3"
+                className="flex flex-col items-center justify-center gap-2 mb-8 px-3"
               >
-                <ImageWithFallback
-                  src="https://available-aquamarine-lziqbpkvhg.edgeone.app/Untitled_design_1.png"
-                  alt="Terminal 404"
-                  className="h-8 w-auto object-contain drop-shadow-[0_0_12px_rgba(0,229,255,0.3)]"
-                />
+                <div className="relative">
+                  <div className="absolute inset-0 bg-[#00E5FF]/20 blur-[15px] rounded-full animate-pulse" />
+                  <ImageWithFallback
+                    src="https://available-aquamarine-lziqbpkvhg.edgeone.app/Untitled_design_1.png"
+                    alt="Terminal 404"
+                    className="relative z-10 h-10 w-auto object-contain drop-shadow-[0_0_12px_rgba(0,229,255,0.4)]"
+                  />
+                </div>
                 <span
-                  className="text-[16px] font-bold tracking-[0.15em] text-white uppercase"
+                  className="text-[13px] font-bold tracking-[0.2em] text-[#00E5FF] uppercase drop-shadow-[0_0_8px_rgba(0,229,255,0.3)]"
                   style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                 >
                   Terminal 404

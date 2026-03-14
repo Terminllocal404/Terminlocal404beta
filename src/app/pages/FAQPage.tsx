@@ -6,36 +6,36 @@ import { PageHero } from "../components/PageHero";
 
 const faqs = [
   {
-    question: "Qual o prazo medio de entrega de um projeto?",
-    answer: "O prazo varia conforme a complexidade e escopo do projeto. Sites institucionais simples podem ficar prontos em 1-2 semanas, enquanto sistemas complexos podem levar de 1 a 3 meses. Trabalhamos com metodologia agil e entregas incrementais para voce acompanhar o progresso.",
+    question: "Qual o prazo médio de entrega de um projeto?",
+    answer: "O prazo varia conforme a complexidade e escopo do projeto. Sites institucionais simples podem ficar prontos em 1-2 semanas, enquanto sistemas complexos podem levar de 1 a 3 meses. Trabalhamos com metodologia ágil e entregas incrementais para você acompanhar o progresso.",
   },
   {
-    question: "Quais tecnologias voces utilizam?",
-    answer: "Utilizamos tecnologias modernas e consolidadas no mercado: React, TypeScript, Node.js, Python, PostgreSQL, MongoDB, AWS, Docker, entre outras. A escolha da stack e feita estrategicamente conforme as necessidades especificas de cada projeto.",
+    question: "Quais tecnologias vocês utilizam?",
+    answer: "Utilizamos tecnologias modernas e consolidadas no mercado: React, TypeScript, Node.js, Python, PostgreSQL, MongoDB, AWS, Docker, entre outras. A escolha da stack é feita estrategicamente conforme as necessidades específicas de cada projeto.",
   },
   {
-    question: "Voces oferecem suporte apos o lancamento?",
-    answer: "Sim! Oferecemos suporte tecnico continuo, manutencoes corretivas e evolutivas. Nossos planos de suporte incluem monitoramento 24/7, backups automaticos, atualizacoes de seguranca e atendimento prioritario via WhatsApp.",
+    question: "Vocês oferecem suporte após o lançamento?",
+    answer: "Sim! Oferecemos suporte técnico contínuo, manutenções corretivas e evolutivas. Nossos planos de suporte incluem monitoramento 24/7, backups automáticos, atualizações de segurança e atendimento prioritário via WhatsApp.",
   },
   {
-    question: "Como funciona o processo de orcamento?",
-    answer: "Apos o contato inicial, agendamos uma reuniao para entender suas necessidades. Em 24-48h enviamos uma proposta tecnica detalhada com escopo, tecnologias, prazo e investimento. Sem custos ou compromissos nesta etapa de analise.",
+    question: "Como funciona o processo de orçamento?",
+    answer: "Após o contato inicial, agendamos uma reunião para entender suas necessidades. Em 24-48h enviamos uma proposta técnica detalhada com escopo, tecnologias, prazo e investimento. Sem custos ou compromissos nesta etapa de análise.",
   },
   {
-    question: "Voces desenvolvem aplicativos mobile?",
-    answer: "Sim, desenvolvemos aplicativos mobile utilizando React Native para entregar solucoes cross-platform (iOS e Android) com codigo compartilhado, reduzindo custos e tempo de desenvolvimento sem perder qualidade.",
+    question: "Vocês desenvolvem aplicativos mobile?",
+    answer: "Sim, desenvolvemos aplicativos mobile utilizando React Native para entregar soluções cross-platform (iOS e Android) com código compartilhado, reduzindo custos e tempo de desenvolvimento sem perder qualidade.",
   },
   {
-    question: "E possivel modernizar um sistema legado?",
-    answer: "Absolutamente! Somos especializados em refatoracao e modernizacao de sistemas legados. Migramos gradualmente para tecnologias modernas, garantindo zero downtime e preservando as regras de negocio existentes.",
+    question: "É possível modernizar um sistema legado?",
+    answer: "Absolutamente! Somos especializados em refatoração e modernização de sistemas legados. Migramos gradualmente para tecnologias modernas, garantindo zero downtime e preservando as regras de negócio existentes.",
   },
   {
-    question: "Qual e o investimento minimo para um projeto?",
-    answer: "Cada projeto e unico e o investimento depende do escopo, complexidade e funcionalidades desejadas. Entre em contato para receber uma proposta personalizada sem compromisso. Trabalhamos com diferentes faixas de orcamento.",
+    question: "Qual é o investimento mínimo para um projeto?",
+    answer: "Cada projeto é único e o investimento depende do escopo, complexidade e funcionalidades desejadas. Entre em contato para receber uma proposta personalizada sem compromisso. Trabalhamos com diferentes faixas de orçamento.",
   },
   {
-    question: "Como funciona a comunicacao durante o projeto?",
-    answer: "Mantemos comunicacao transparente e constante via WhatsApp, reunioes semanais de alinhamento, e acesso a um painel onde voce acompanha o progresso em tempo real. Voce participa de cada etapa do desenvolvimento.",
+    question: "Como funciona a comunicação durante o projeto?",
+    answer: "Mantemos comunicação transparente e constante via WhatsApp, reuniões semanais de alinhamento, e acesso a um painel onde você acompanha o progresso em tempo real. Você participa de cada etapa do desenvolvimento.",
   },
 ];
 
@@ -48,7 +48,7 @@ export function FAQPage() {
         badge="Suporte"
         title="Perguntas"
         highlight="Frequentes"
-        description="Respostas diretas para as principais duvidas sobre nossos servicos, processos e tecnologias."
+        description="Respostas diretas para as principais dúvidas sobre nossos serviços, processos e tecnologias."
       >
         <div className="flex items-center gap-4 flex-wrap">
           <a
@@ -111,7 +111,7 @@ export function FAQPage() {
                         </span>
                         <h3
                           className={`font-semibold text-[15px] md:text-base transition-colors pr-4 flex-1 ${
-                            isOpen ? "text-white" : "text-white/85 group-hover:text-white"
+                            isOpen ? "text-white" : "text-white group-hover:text-white"
                           }`}
                           style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                         >
@@ -142,7 +142,7 @@ export function FAQPage() {
                           transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                           className="overflow-hidden"
                         >
-                          <p className="text-white/35 text-[13px] md:text-sm leading-[1.7] pt-4 pl-8 pr-12">
+                          <p className="text-white text-[13px] md:text-sm leading-[1.7] pt-4 pl-8 pr-12">
                             {faq.answer}
                           </p>
                         </motion.div>
@@ -161,7 +161,7 @@ export function FAQPage() {
             viewport={{ once: true }}
             className="mt-12 md:mt-16 text-center"
           >
-            <p className="text-white/20 text-sm mb-4">Nao encontrou sua resposta?</p>
+            <p className="text-white/50 text-sm mb-4">Não encontrou sua resposta?</p>
             <a
               href="https://wa.me/553291547944?text=Seja%20bem-vindo!%20Faça%20o%20seu%20projeto%20conosco."
               target="_blank"

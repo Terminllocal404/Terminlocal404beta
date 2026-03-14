@@ -36,7 +36,7 @@ const contactMethods = [
   {
     icon: Phone,
     title: "Telefone",
-    subtitle: "Horario comercial",
+    subtitle: "Horário comercial",
     value: "(32) 9154-7944",
     href: "tel:+553291547944",
     external: false,
@@ -52,9 +52,9 @@ export function ContactPage() {
         title="Inicie um"
         highlight="projeto"
         titleSuffix=" conosco."
-        description="Discuta solucoes de software, terceirizacao de desenvolvimento ou ingresse no nosso hub de inovacao. Estamos prontos para atender voce."
+        description="Discuta soluções de software, terceirização de desenvolvimento ou ingresse no nosso hub de inovação. Estamos prontos para atender você."
       >
-        <div className="flex items-center gap-3 text-[11px] text-white/25" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+        <div className="flex items-center gap-3 text-[11px] text-white/50" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
           <div className="flex items-center gap-1.5">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
@@ -65,7 +65,7 @@ export function ContactPage() {
           <div className="w-px h-3 bg-white/[0.08]" />
           <div className="flex items-center gap-1.5">
             <Clock className="w-3 h-3" />
-            Resposta em ate 24h
+            Resposta em até 24h
           </div>
         </div>
       </PageHero>
@@ -109,21 +109,21 @@ export function ContactPage() {
                   </div>
 
                   <h3
-                    className="text-white/85 font-semibold text-[17px] mb-1 group-hover:text-white transition-colors tracking-tight"
+                    className="text-white font-semibold text-[17px] mb-1 tracking-tight transition-colors"
                     style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                   >
                     {method.title}
                   </h3>
-                  <p className="text-white/22 text-[12px] mb-3">{method.subtitle}</p>
+                  <p className="text-white text-[12px] mb-3">{method.subtitle}</p>
 
                   <div className="flex items-center gap-2 pt-3 border-t border-white/[0.04]">
                     <span
-                      className="text-white/35 text-[12px] group-hover:text-[#00E5FF]/60 transition-colors truncate"
+                      className="text-white text-[12px] transition-colors truncate"
                       style={{ fontFamily: "'JetBrains Mono', monospace" }}
                     >
                       {method.value}
                     </span>
-                    {method.external && <ExternalLink className="w-3 h-3 text-white/15 shrink-0" />}
+                    {method.external && <ExternalLink className="w-3 h-3 text-white/50 shrink-0" />}
                   </div>
                 </div>
               </motion.a>
@@ -198,8 +198,8 @@ export function ContactPage() {
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00E5FF] to-[#0080FF]">Imediato</span>
               </h3>
 
-              <p className="text-[13px] text-white/28 mb-6 leading-[1.65] max-w-sm relative z-10">
-                Clique abaixo para ser redirecionado ao nosso WhatsApp oficial e conversar diretamente com a equipe tecnica.
+              <p className="text-[13px] text-white mb-6 leading-[1.65] max-w-sm relative z-10">
+                Clique abaixo para ser redirecionado ao nosso WhatsApp oficial e conversar diretamente com a equipe técnica.
               </p>
 
               <a

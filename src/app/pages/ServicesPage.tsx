@@ -13,23 +13,23 @@ const services = [
   {
     icon: Globe,
     title: "Desenvolvimento Web",
-    description: "Sites institucionais, portfolios e landing pages de alta conversao com SEO otimizado e performance excepcional.",
+    description: "Sites institucionais, portfólios e landing pages de alta conversão com SEO otimizado e performance excepcional.",
     tag: "WEB",
     features: ["SEO Otimizado", "Performance 100%", "Design Responsivo", "CMS Headless"],
     accentColor: "from-cyan-500/20 to-blue-500/10",
   },
   {
     icon: AppWindow,
-    title: "Aplicacoes SaaS",
-    description: "Plataformas completas com dashboards interativos, gestao de usuarios e integracoes de APIs robustas.",
+    title: "Aplicações SaaS",
+    description: "Plataformas completas com dashboards interativos, gestão de usuários e integrações de APIs robustas.",
     tag: "APPS",
     features: ["Multi-tenant", "APIs RESTful", "Real-time", "Dashboard Analytics"],
     accentColor: "from-blue-500/20 to-indigo-500/10",
   },
   {
     icon: RefreshCw,
-    title: "Modernizacao Digital",
-    description: "Refatoracao de sistemas legados com migracao para tecnologias modernas e arquitetura escalavel.",
+    title: "Modernização Digital",
+    description: "Refatoração de sistemas legados com migração para tecnologias modernas e arquitetura escalável.",
     tag: "LEGACY",
     features: ["Code Refactoring", "Cloud Migration", "Zero Downtime", "Tech Audit"],
     accentColor: "from-purple-500/20 to-pink-500/10",
@@ -37,23 +37,23 @@ const services = [
   {
     icon: Rocket,
     title: "MVPs & Startups",
-    description: "Desenvolvimento agil de produtos minimos viaveis com foco em validacao de mercado e crescimento rapido.",
+    description: "Desenvolvimento ágil de produtos mínimos viáveis com foco em validação de mercado e crescimento rápido.",
     tag: "STARTUP",
-    features: ["Entrega Rapida", "Metodologia Agil", "Escalabilidade", "Product-Market Fit"],
+    features: ["Entrega Rápida", "Metodologia Ágil", "Escalabilidade", "Product-Market Fit"],
     accentColor: "from-emerald-500/20 to-teal-500/10",
   },
   {
     icon: Sliders,
     title: "Sistemas Corporativos",
-    description: "ERPs, CRMs e sistemas de gestao personalizados com arquitetura enterprise e seguranca avancada.",
+    description: "ERPs, CRMs e sistemas de gestão personalizados com arquitetura enterprise e segurança avançada.",
     tag: "ENTERPRISE",
-    features: ["Alta Seguranca", "Automacao", "Integracoes", "Business Intelligence"],
+    features: ["Alta Segurança", "Automação", "Integrações", "Business Intelligence"],
     accentColor: "from-orange-500/20 to-amber-500/10",
   },
   {
     icon: Smartphone,
     title: "Aplicativos Mobile",
-    description: "Apps nativos e cross-platform com React Native para iOS e Android com experiencia nativa.",
+    description: "Apps nativos e cross-platform com React Native para iOS e Android com experiência nativa.",
     tag: "MOBILE",
     features: ["Cross-platform", "Push Notifications", "Offline Mode", "App Store Ready"],
     accentColor: "from-pink-500/20 to-rose-500/10",
@@ -61,15 +61,15 @@ const services = [
   {
     icon: Database,
     title: "APIs & Backend",
-    description: "Desenvolvimento de APIs RESTful e GraphQL robustas com documentacao completa e alta performance.",
+    description: "Desenvolvimento de APIs RESTful e GraphQL robustas com documentação completa e alta performance.",
     tag: "API",
-    features: ["GraphQL/REST", "Documentacao", "Rate Limiting", "Webhooks"],
+    features: ["GraphQL/REST", "Documentação", "Rate Limiting", "Webhooks"],
     accentColor: "from-teal-500/20 to-cyan-500/10",
   },
   {
     icon: Shield,
-    title: "Consultoria Tecnica",
-    description: "Analise de arquitetura, auditoria de codigo, otimizacao de performance e planejamento estrategico.",
+    title: "Consultoria Técnica",
+    description: "Análise de arquitetura, auditoria de código, otimização de performance e planejamento estratégico.",
     tag: "CONSULTING",
     features: ["Code Review", "Architecture Audit", "Performance Tuning", "Tech Strategy"],
     accentColor: "from-indigo-500/20 to-violet-500/10",
@@ -80,10 +80,10 @@ export function ServicesPage() {
   return (
     <div className="min-h-screen bg-[#020408]">
       <PageHero
-        badge="Nossas Solucoes"
+        badge="Nossas Soluções"
         title="Engenharia de Software"
-        highlight="de Excelencia"
-        description="Desenvolvemos solucoes digitais completas com arquitetura moderna, codigo limpo e foco em performance, seguranca e escalabilidade para o seu negocio."
+        highlight="de Excelência"
+        description="Desenvolvemos soluções digitais completas com arquitetura moderna, código limpo e foco em performance, segurança e escalabilidade para o seu negócio."
       >
         <div className="flex flex-wrap items-center gap-4">
           <a
@@ -94,7 +94,7 @@ export function ServicesPage() {
           >
             <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700" />
             <Sparkles className="w-3.5 h-3.5 relative z-10" />
-            <span className="relative z-10">Solicitar Orcamento</span>
+            <span className="relative z-10">Solicitar Orçamento</span>
           </a>
           <Link
             to="/solicitacao"
@@ -122,7 +122,7 @@ export function ServicesPage() {
               style={{ fontFamily: "'JetBrains Mono', monospace" }}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-[#00E5FF] shadow-[0_0_6px_rgba(0,229,255,0.6)]" />
-              Catalogo Completo
+              Catálogo Completo
             </motion.span>
             <motion.h2
               initial={{ opacity: 0, y: 16 }}
@@ -131,7 +131,7 @@ export function ServicesPage() {
               className="text-[1.75rem] sm:text-4xl md:text-[2.75rem] font-bold text-white mb-4 tracking-tight leading-[1.15]"
               style={{ fontFamily: "'Space Grotesk', sans-serif" }}
             >
-              Solucoes para cada{" "}
+              Soluções para cada{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00E5FF] to-[#0080FF]">
                 necessidade
               </span>
@@ -140,9 +140,9 @@ export function ServicesPage() {
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-[15px] md:text-base text-white/35 leading-relaxed"
+              className="text-[15px] md:text-base text-white leading-relaxed"
             >
-              Do desenvolvimento web ao mobile, de MVPs a sistemas enterprise. Encontre a solucao ideal para o seu projeto.
+              Do desenvolvimento web ao mobile, de MVPs a sistemas enterprise. Encontre a solução ideal para o seu projeto.
             </motion.p>
           </div>
 
@@ -173,13 +173,13 @@ export function ServicesPage() {
                   </div>
 
                   <h3
-                    className="text-white/85 font-semibold text-[16px] mb-2.5 group-hover:text-white transition-colors tracking-tight"
+                    className="text-white font-semibold text-[16px] mb-2.5 transition-colors tracking-tight"
                     style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                   >
                     {service.title}
                   </h3>
 
-                  <p className="text-white/28 text-[13px] leading-[1.6] mb-4 group-hover:text-white/38 transition-colors flex-grow">
+                  <p className="text-white text-[13px] leading-[1.6] mb-4 transition-colors flex-grow">
                     {service.description}
                   </p>
 
@@ -188,7 +188,7 @@ export function ServicesPage() {
                       <div key={i} className="flex items-center gap-2">
                         <CheckCircle2 className="w-3 h-3 text-[#00E5FF]/50 shrink-0" />
                         <span
-                          className="text-white/22 text-[11px] group-hover:text-white/32 transition-colors"
+                          className="text-white text-[11px] transition-colors"
                           style={{ fontFamily: "'JetBrains Mono', monospace" }}
                         >
                           {feature}
@@ -230,13 +230,13 @@ export function ServicesPage() {
                 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-4 tracking-tight"
                 style={{ fontFamily: "'Space Grotesk', sans-serif" }}
               >
-                Precisa de uma solucao{" "}
+                Precisa de uma solução{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00E5FF] to-[#0080FF]">
                   personalizada?
                 </span>
               </h3>
-              <p className="text-white/30 text-[14px] md:text-base mb-7 max-w-xl mx-auto leading-relaxed">
-                Cada projeto e unico. Vamos analisar suas necessidades e criar a solucao ideal com as melhores tecnologias do mercado.
+              <p className="text-white text-[14px] md:text-base mb-7 max-w-xl mx-auto leading-relaxed">
+                Cada projeto é único. Vamos analisar suas necessidades e criar a solução ideal com as melhores tecnologias do mercado.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">

@@ -11,7 +11,7 @@ const socialLinks = [
 
 const footerLinks = [
   { name: "Sobre", href: "/sobre" },
-  { name: "Solucoes", href: "/servicos" },
+  { name: "Soluções", href: "/servicos" },
   { name: "Projetos", href: "/projetos" },
   { name: "Comunidade", href: "/comunidade" },
   { name: "FAQ", href: "/faq" },
@@ -29,49 +29,34 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 mb-10 md:mb-12">
           {/* Brand with Logo */}
           <div className="flex flex-col items-center md:items-start">
-            <Link to="/" className="flex items-center gap-2.5 group mb-4">
-              <ImageWithFallback
-                src="https://available-aquamarine-lziqbpkvhg.edgeone.app/Untitled_design_1.png"
-                alt="Terminal 404"
-                className="h-8 w-auto object-contain drop-shadow-[0_0_10px_rgba(0,229,255,0.2)]"
-              />
+            <Link to="/" className="flex flex-col items-center gap-2 group mb-4">
+              <div className="relative">
+                <div className="absolute inset-0 bg-[#00E5FF]/10 blur-[10px] rounded-full group-hover:bg-[#00E5FF]/30 transition-all duration-300" />
+                <ImageWithFallback
+                  src="https://available-aquamarine-lziqbpkvhg.edgeone.app/Untitled_design_1.png"
+                  alt="Terminal 404"
+                  className="relative z-10 h-10 w-auto object-contain drop-shadow-[0_0_12px_rgba(0,229,255,0.4)]"
+                />
+              </div>
               <span
-                className="text-[16px] font-bold tracking-[0.15em] text-white group-hover:text-[#00E5FF] transition-colors duration-300 uppercase"
+                className="text-[13px] font-bold tracking-[0.2em] text-[#00E5FF] uppercase drop-shadow-[0_0_8px_rgba(0,229,255,0.3)] transition-colors duration-300"
                 style={{ fontFamily: "'Space Grotesk', sans-serif" }}
               >
                 Terminal 404
               </span>
             </Link>
-            <p className="text-white/18 text-[12px] text-center md:text-left max-w-[260px] leading-[1.65]">
-              Engenharia de software de alta performance e arquitetura escalavel para o futuro digital.
+            <p className="text-white text-[12px] text-center md:text-left max-w-[260px] leading-[1.65]">
+              Engenharia de software de alta performance e arquitetura escalável para o futuro digital.
             </p>
           </div>
 
           {/* Links */}
-          <div className="flex flex-col items-center md:items-start">
-            <span
-              className="text-white/12 text-[10px] uppercase tracking-wider mb-3"
-              style={{ fontFamily: "'JetBrains Mono', monospace" }}
-            >
-              Navegacao
-            </span>
-            <div className="flex flex-wrap justify-center md:justify-start gap-x-5 gap-y-1.5">
-              {footerLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  to={link.href}
-                  className="text-white/28 text-[13px] hover:text-[#00E5FF] transition-colors duration-300"
-                >
-                  {link.name}
-                </Link>
-              ))}
-            </div>
-          </div>
+          <div className="flex flex-col items-center md:items-start" />
 
           {/* Social */}
           <div className="flex flex-col items-center md:items-end">
             <span
-              className="text-white/12 text-[10px] uppercase tracking-wider mb-3"
+              className="text-white text-[10px] uppercase tracking-wider mb-3"
               style={{ fontFamily: "'JetBrains Mono', monospace" }}
             >
               Conectar
@@ -85,7 +70,7 @@ export function Footer() {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-9 h-9 rounded-lg bg-white/[0.025] border border-white/[0.05] flex items-center justify-center text-white/18 hover:text-[#00E5FF] hover:border-[#00E5FF]/15 hover:bg-[#00E5FF]/[0.04] active:scale-95 transition-all duration-300"
+                    className="w-9 h-9 rounded-lg bg-white/[0.025] border border-white/[0.05] flex items-center justify-center text-white hover:text-[#00E5FF] hover:border-[#00E5FF]/15 hover:bg-[#00E5FF]/[0.04] active:scale-95 transition-all duration-300"
                     title={social.name}
                   >
                     <Icon className="w-3.5 h-3.5" />

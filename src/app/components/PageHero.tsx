@@ -25,23 +25,25 @@ export function PageHero({ badge, title, highlight, titleSuffix = "", descriptio
         <div className="absolute top-[30%] left-0 w-full h-px bg-gradient-to-r from-transparent via-[#00E5FF]/[0.04] to-transparent" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-5 sm:px-6 relative z-10">
-        {/* Brand watermark */}
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 relative z-10 flex flex-col items-center text-center">
+        {/* Brand watermark - Centralized Logo + Name */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="flex items-center gap-2.5 mb-8 md:mb-10"
+          className="flex flex-col items-center justify-center gap-3 mb-10 md:mb-12"
         >
-          <ImageWithFallback
-            src="https://available-aquamarine-lziqbpkvhg.edgeone.app/Untitled_design_1.png"
-            alt="Terminal 404"
-            className="h-6 w-auto object-contain drop-shadow-[0_0_8px_rgba(0,229,255,0.2)] opacity-40"
-          />
-          <div className="w-px h-4 bg-white/[0.08]" />
+          <div className="relative flex justify-center items-center">
+            <div className="absolute inset-0 bg-[#00E5FF]/20 blur-[25px] rounded-full animate-pulse" />
+            <ImageWithFallback
+              src="https://available-aquamarine-lziqbpkvhg.edgeone.app/Untitled_design_1.png"
+              alt="Terminal 404"
+              className="h-16 md:h-20 w-auto object-contain drop-shadow-[0_0_15px_rgba(0,229,255,0.7)] relative z-10"
+            />
+          </div>
           <span
-            className="text-[10px] text-white/15 uppercase tracking-[0.2em]"
-            style={{ fontFamily: "'JetBrains Mono', monospace" }}
+            className="text-[12px] md:text-[14px] font-bold text-[#00E5FF] uppercase tracking-[0.3em] drop-shadow-[0_0_10px_rgba(0,229,255,0.5)]"
+            style={{ fontFamily: "'Space Grotesk', sans-serif" }}
           >
             Terminal 404
           </span>
@@ -52,7 +54,7 @@ export function PageHero({ badge, title, highlight, titleSuffix = "", descriptio
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.05 }}
-          className="mb-5"
+          className="mb-6 flex justify-center"
         >
           <span
             className="inline-flex items-center gap-2 text-[#00E5FF] text-[10px] md:text-[11px] font-medium uppercase tracking-[0.18em] bg-[#00E5FF]/[0.05] px-4 py-1.5 rounded-full border border-[#00E5FF]/[0.1]"

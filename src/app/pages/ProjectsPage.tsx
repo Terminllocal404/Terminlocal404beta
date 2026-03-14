@@ -8,9 +8,9 @@ import {
 
 const projects = [
   {
-    title: "Sistema de Gestao Empresarial",
+    title: "Sistema de Gestão Empresarial",
     category: "ERP & Dashboard",
-    description: "Plataforma completa de gestao com modulos financeiros, controle de estoque, gestao de funcionarios e analytics em tempo real com dashboards interativos.",
+    description: "Plataforma completa de gestão com módulos financeiros, controle de estoque, gestão de funcionários e analytics em tempo real com dashboards interativos.",
     tags: ["React", "Node.js", "PostgreSQL", "Docker"],
     gradient: "from-cyan-500/15 via-cyan-500/5 to-transparent",
     icon: Layers,
@@ -18,15 +18,15 @@ const projects = [
   {
     title: "Plataforma E-commerce",
     category: "E-commerce & Pagamentos",
-    description: "Marketplace escalavel com integracao completa de pagamentos, gestao de produtos, carrinho inteligente e painel administrativo avancado.",
+    description: "Marketplace escalável com integração completa de pagamentos, gestão de produtos, carrinho inteligente e painel administrativo avançado.",
     tags: ["Next.js", "Stripe", "MongoDB", "Redis"],
     gradient: "from-purple-500/15 via-purple-500/5 to-transparent",
     icon: Globe,
   },
   {
-    title: "Sistema de Automacao",
-    category: "Automacao & Integracoes",
-    description: "Solucao de automacao de processos empresariais com integracoes de APIs externas, workflows personalizados e monitoramento em tempo real.",
+    title: "Sistema de Automação",
+    category: "Automação & Integrações",
+    description: "Solução de automação de processos empresariais com integrações de APIs externas, workflows personalizados e monitoramento em tempo real.",
     tags: ["Python", "Redis", "Docker", "Celery"],
     gradient: "from-green-500/15 via-green-500/5 to-transparent",
     icon: Zap,
@@ -40,9 +40,9 @@ const projects = [
     icon: Globe,
   },
   {
-    title: "App de Gestao de Projetos",
+    title: "App de Gestão de Projetos",
     category: "SaaS & Produtividade",
-    description: "Aplicacao SaaS para gestao agil de projetos com colaboracao em tempo real, kanban boards e integracoes com GitHub e Slack.",
+    description: "Aplicação SaaS para gestão ágil de projetos com colaboração em tempo real, kanban boards e integrações com GitHub e Slack.",
     tags: ["Vue.js", "WebSockets", "AWS", "GraphQL"],
     gradient: "from-blue-500/15 via-blue-500/5 to-transparent",
     icon: AppWindow,
@@ -50,15 +50,15 @@ const projects = [
   {
     title: "API Gateway & Microservices",
     category: "Backend & Infraestrutura",
-    description: "Arquitetura de microservicos com API Gateway, autenticacao JWT, rate limiting e monitoramento em tempo real com alertas.",
+    description: "Arquitetura de microsserviços com API Gateway, autenticação JWT, rate limiting e monitoramento em tempo real com alertas.",
     tags: ["Node.js", "Docker", "Kubernetes", "Prometheus"],
     gradient: "from-teal-500/15 via-teal-500/5 to-transparent",
     icon: Server,
   },
   {
-    title: "Sistema de Seguranca",
+    title: "Sistema de Segurança",
     category: "Cybersecurity",
-    description: "Plataforma de monitoramento de seguranca com deteccao de intrusao, analise de vulnerabilidades e dashboards de compliance.",
+    description: "Plataforma de monitoramento de segurança com detecção de intrusão, análise de vulnerabilidades e dashboards de compliance.",
     tags: ["Python", "ElasticSearch", "Kafka", "React"],
     gradient: "from-red-500/15 via-red-500/5 to-transparent",
     icon: Shield,
@@ -66,7 +66,7 @@ const projects = [
   {
     title: "Plataforma de Analytics",
     category: "Data & Business Intelligence",
-    description: "Sistema de analytics com ingestao de dados em tempo real, visualizacoes interativas e relatorios automatizados para tomada de decisao.",
+    description: "Sistema de analytics com ingestão de dados em tempo real, visualizações interativas e relatórios automatizados para tomada de decisão.",
     tags: ["React", "D3.js", "ClickHouse", "Apache Airflow"],
     gradient: "from-indigo-500/15 via-indigo-500/5 to-transparent",
     icon: Code2,
@@ -77,10 +77,10 @@ export function ProjectsPage() {
   return (
     <div className="min-h-screen bg-[#020408]">
       <PageHero
-        badge="Portfolio"
+        badge="Portfólio"
         title="Projetos"
         highlight="de Impacto"
-        description="Exemplos de solucoes desenvolvidas com excelencia tecnica, arquitetura escalavel e foco em resultados mensuraveis para nossos clientes."
+        description="Exemplos de soluções desenvolvidas com excelência técnica, arquitetura escalável e foco em resultados mensuráveis para nossos clientes."
       >
         <div className="flex items-center gap-4 flex-wrap">
           <a
@@ -97,7 +97,7 @@ export function ProjectsPage() {
             to="/servicos"
             className="inline-flex items-center gap-2 text-white/35 text-[13px] hover:text-[#00E5FF] transition-colors"
           >
-            Ver Solucoes
+            Ver Soluções
             <ArrowUpRight className="w-3.5 h-3.5" />
           </Link>
         </div>
@@ -138,13 +138,13 @@ export function ProjectsPage() {
                   </div>
 
                   <h3
-                    className="text-white/85 font-semibold text-[16px] mb-2.5 tracking-tight group-hover:text-white transition-colors"
+                    className="text-white font-semibold text-[16px] mb-2.5 tracking-tight transition-colors"
                     style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                   >
                     {project.title}
                   </h3>
 
-                  <p className="text-white/28 text-[13px] leading-[1.6] mb-5 group-hover:text-white/38 transition-colors flex-grow">
+                  <p className="text-white text-[13px] leading-[1.6] mb-5 transition-colors flex-grow">
                     {project.description}
                   </p>
 
@@ -193,8 +193,8 @@ export function ProjectsPage() {
                 </span>
               </h3>
 
-              <p className="text-white/30 text-[14px] md:text-base mb-8 max-w-xl mx-auto leading-relaxed">
-                Cada projeto e unico. Vamos construir juntos a solucao perfeita para o seu negocio com tecnologia de ponta.
+              <p className="text-white text-[14px] md:text-base mb-8 max-w-xl mx-auto leading-relaxed">
+                Cada projeto é único. Vamos construir juntos a solução perfeita para o seu negócio com tecnologia de ponta.
               </p>
 
               <a

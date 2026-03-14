@@ -14,8 +14,8 @@ import { Hero } from "../components/Hero";
 
 const pages = [
   {
-    title: "Sobre Nos",
-    description: "Conhega a Terminal 404, nossa historia, valores e a equipe por tras das solugoes.",
+    title: "Sobre Nós",
+    description: "Conheça a Terminal 404, nossa história, valores e a equipe por trás das soluções.",
     href: "/sobre",
     icon: Users,
     gradient: "from-cyan-500/15 via-cyan-500/5 to-transparent",
@@ -23,8 +23,8 @@ const pages = [
     borderHover: "hover:border-[#00E5FF]/20",
   },
   {
-    title: "Solucoes",
-    description: "Servigos completos de desenvolvimento web, mobile, automacao e consultoria tecnica.",
+    title: "Soluções",
+    description: "Serviços completos de desenvolvimento web, mobile, automação e consultoria técnica.",
     href: "/servicos",
     icon: Code2,
     gradient: "from-blue-500/15 via-blue-500/5 to-transparent",
@@ -33,7 +33,7 @@ const pages = [
   },
   {
     title: "Projetos",
-    description: "Portfolio com exemplos de solugoes desenvolvidas com excelencia tecnica.",
+    description: "Portfólio com exemplos de soluções desenvolvidas com excelência técnica.",
     href: "/projetos",
     icon: FolderKanban,
     gradient: "from-purple-500/15 via-purple-500/5 to-transparent",
@@ -42,7 +42,7 @@ const pages = [
   },
   {
     title: "Comunidade",
-    description: "Faga parte da nossa comunidade de desenvolvedores e entusiastas de tecnologia.",
+    description: "Faça parte da nossa comunidade de desenvolvedores e entusiastas de tecnologia.",
     href: "/comunidade",
     icon: Globe,
     gradient: "from-green-500/15 via-green-500/5 to-transparent",
@@ -51,7 +51,7 @@ const pages = [
   },
   {
     title: "FAQ",
-    description: "Respostas para as duvidas mais frequentes sobre nossos servigos e processos.",
+    description: "Respostas para as dúvidas mais frequentes sobre nossos serviços e processos.",
     href: "/faq",
     icon: HelpCircle,
     gradient: "from-orange-500/15 via-orange-500/5 to-transparent",
@@ -104,8 +104,8 @@ export function Home() {
                 nosso universo
               </span>
             </h2>
-            <p className="text-white/30 text-[14px] md:text-base max-w-xl mx-auto leading-relaxed">
-              Cada area do nosso site foi pensada para voce encontrar exatamente o que precisa.
+            <p className="text-white text-[14px] md:text-base max-w-xl mx-auto leading-relaxed">
+              Cada área do nosso site foi pensada para você encontrar exatamente o que precisa.
             </p>
           </motion.div>
 
@@ -139,16 +139,16 @@ export function Home() {
                     {/* Title + Arrow */}
                     <div className="flex items-center justify-between mb-2.5">
                       <h3
-                        className="font-semibold text-[16px] text-white/85 group-hover:text-white transition-colors"
+                        className="font-semibold text-[16px] text-white transition-colors"
                         style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                       >
                         {page.title}
                       </h3>
-                      <ArrowRight className="w-4 h-4 text-white/10 group-hover:text-[#00E5FF] group-hover:translate-x-1 transition-all duration-300" />
+                      <ArrowRight className="w-4 h-4 text-white group-hover:text-[#00E5FF] group-hover:translate-x-1 transition-all duration-300" />
                     </div>
 
                     {/* Description */}
-                    <p className="text-white/28 text-[13px] leading-[1.6] group-hover:text-white/40 transition-colors">
+                    <p className="text-white text-[13px] leading-[1.6] transition-colors">
                       {page.description}
                     </p>
                   </div>
