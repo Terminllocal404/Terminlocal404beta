@@ -47,13 +47,14 @@ export function FloatingWhatsApp() {
 
           {/* Button */}
           <a
-            href="https://wa.me/553291547944"
+            href="https://wa.me/553291547944?text=Seja%20bem-vindo!%20Faça%20o%20seu%20projeto%20conosco."
             target="_blank"
             rel="noopener noreferrer"
-            className="group w-14 h-14 rounded-full bg-[#00E5FF] text-[#020408] flex items-center justify-center shadow-[0_4px_20px_rgba(0,229,255,0.3)] hover:shadow-[0_4px_30px_rgba(0,229,255,0.45)] hover:scale-105 active:scale-95 transition-all duration-300"
+            className="group w-14 h-14 rounded-full bg-gradient-to-br from-[#00E5FF] to-[#00B8D4] text-[#020408] flex items-center justify-center shadow-[0_4px_20px_rgba(0,229,255,0.3)] hover:shadow-[0_4px_30px_rgba(0,229,255,0.45)] hover:scale-105 active:scale-95 transition-all duration-300 relative overflow-hidden"
             onClick={() => setTooltipDismissed(true)}
           >
-            <MessageCircle className="w-6 h-6" />
+            <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700" />
+            <MessageCircle className="w-6 h-6 relative z-10" />
           </a>
         </motion.div>
       )}

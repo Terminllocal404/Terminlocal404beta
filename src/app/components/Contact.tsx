@@ -1,18 +1,18 @@
 import { motion } from "motion/react";
 import { Mail, Phone, Instagram, Github, Linkedin, MessageCircle, ArrowUpRight } from "lucide-react";
+import { SectionHeader } from "./SectionHeader";
 
 const socialLinks = [
   { name: "Instagram", url: "https://www.instagram.com/terminal_4.0.4/", icon: Instagram },
-  { name: "WhatsApp", url: "https://wa.me/553291547944", icon: MessageCircle },
+  { name: "WhatsApp", url: "https://wa.me/553291547944?text=Seja%20bem-vindo!%20Faça%20o%20seu%20projeto%20conosco.", icon: MessageCircle },
   { name: "GitHub", url: "https://github.com/Terminllocal404", icon: Github },
   { name: "LinkedIn", url: "https://www.linkedin.com/posts/terminal-404_terminal404-linkedin-activity-7419888008151261184-qFpP", icon: Linkedin },
 ];
 
 export function Contact() {
   return (
-    <section id="contato" className="py-20 md:py-32 relative bg-[#020408] overflow-hidden">
+    <section id="contato" className="py-24 md:py-36 relative bg-[#020408] overflow-hidden section-divider">
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/[0.05] to-transparent" />
         <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-[#00E5FF]/[0.02] rounded-full blur-[120px]" />
       </div>
 
@@ -20,15 +20,26 @@ export function Contact() {
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-14">
           {/* Left */}
           <div className="flex flex-col justify-center">
-            <motion.span
+            <motion.div
               initial={{ opacity: 0, y: 8 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="inline-block text-[#00E5FF] text-[10px] md:text-[11px] font-medium uppercase tracking-[0.18em] bg-[#00E5FF]/[0.05] px-4 py-1.5 rounded-full border border-[#00E5FF]/12 mb-5 w-fit"
-              style={{ fontFamily: "'JetBrains Mono', monospace" }}
+              className="flex items-center gap-3 mb-5"
             >
-              Contato
-            </motion.span>
+              <span
+                className="text-[#00E5FF]/15 text-[11px] font-bold tracking-[0.2em]"
+                style={{ fontFamily: "'JetBrains Mono', monospace" }}
+              >
+                09
+              </span>
+              <span
+                className="inline-flex items-center gap-2 text-[#00E5FF] text-[10px] md:text-[11px] font-medium uppercase tracking-[0.18em] bg-[#00E5FF]/[0.05] px-4 py-1.5 rounded-full border border-[#00E5FF]/[0.1]"
+                style={{ fontFamily: "'JetBrains Mono', monospace" }}
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-[#00E5FF] shadow-[0_0_6px_rgba(0,229,255,0.6)]" />
+                Contato
+              </span>
+            </motion.div>
 
             <motion.h2
               initial={{ opacity: 0, y: 16 }}
@@ -50,7 +61,7 @@ export function Contact() {
               viewport={{ once: true }}
               className="text-[15px] md:text-base text-white/35 mb-8 leading-[1.7]"
             >
-              Discuta soluções de software, terceirização de desenvolvimento ou ingresse no nosso hub de inovação.
+              Discuta solucoes de software, terceirizacao de desenvolvimento ou ingresse no nosso hub de inovacao.
             </motion.p>
 
             {/* Contact info */}
@@ -69,7 +80,7 @@ export function Contact() {
                   href={item.href}
                   className="group flex items-center gap-3.5 p-4 rounded-xl bg-white/[0.015] border border-white/[0.05] hover:border-[#00E5FF]/[0.12] hover:bg-[#00E5FF]/[0.02] transition-all duration-300 active:scale-[0.99]"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-[#00E5FF]/[0.07] border border-[#00E5FF]/[0.12] flex items-center justify-center text-[#00E5FF] shrink-0 group-hover:shadow-[0_0_14px_rgba(0,229,255,0.1)] transition-shadow duration-300">
+                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#00E5FF]/[0.1] to-[#0080FF]/[0.05] border border-[#00E5FF]/[0.12] flex items-center justify-center text-[#00E5FF] shrink-0 group-hover:shadow-[0_0_14px_rgba(0,229,255,0.1)] transition-shadow duration-300">
                     <item.icon className="w-4 h-4" />
                   </div>
                   <div className="min-w-0">
@@ -127,8 +138,9 @@ export function Contact() {
             <div className="relative rounded-2xl p-7 md:p-10 bg-white/[0.015] border border-white/[0.05] text-center flex flex-col items-center overflow-hidden">
               {/* Top glow */}
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(0,229,255,0.06),transparent_55%)] pointer-events-none" />
+              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#00E5FF]/20 to-transparent" />
 
-              <div className="w-16 h-16 md:w-18 md:h-18 rounded-2xl bg-[#00E5FF]/[0.07] border border-[#00E5FF]/[0.12] flex items-center justify-center mb-6 relative z-10">
+              <div className="w-16 h-16 md:w-18 md:h-18 rounded-2xl bg-gradient-to-br from-[#00E5FF]/[0.12] to-[#0080FF]/[0.06] border border-[#00E5FF]/[0.12] flex items-center justify-center mb-6 relative z-10">
                 <MessageCircle className="w-8 h-8 text-[#00E5FF]" />
               </div>
 
@@ -136,7 +148,7 @@ export function Contact() {
                 className="text-[22px] md:text-2xl font-semibold text-white mb-2.5 tracking-tight relative z-10"
                 style={{ fontFamily: "'Space Grotesk', sans-serif" }}
               >
-                Atendimento <span className="text-[#00E5FF]">Imediato</span>
+                Atendimento <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00E5FF] to-[#0080FF]">Imediato</span>
               </h3>
 
               <p className="text-[13px] md:text-sm text-white/28 mb-7 leading-[1.65] max-w-sm relative z-10">
@@ -144,14 +156,15 @@ export function Contact() {
               </p>
 
               <a
-                href="https://wa.me/553291547944"
+                href="https://wa.me/553291547944?text=Seja%20bem-vindo!%20Faça%20o%20seu%20projeto%20conosco."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group w-full sm:w-auto h-13 px-8 bg-[#00E5FF] text-[#020408] font-semibold text-[14px] rounded-xl flex items-center justify-center gap-2.5 hover:bg-[#2AECFF] hover:shadow-[0_4px_30px_rgba(0,229,255,0.3)] active:scale-[0.97] transition-all duration-300 relative z-10"
+                className="group w-full sm:w-auto h-13 px-8 bg-gradient-to-r from-[#00E5FF] to-[#00B8D4] text-[#020408] font-semibold text-[14px] rounded-xl flex items-center justify-center gap-2.5 hover:shadow-[0_4px_30px_rgba(0,229,255,0.3)] active:scale-[0.97] transition-all duration-300 relative z-10 overflow-hidden"
               >
-                <MessageCircle className="w-[18px] h-[18px]" />
-                Falar com a equipe
-                <ArrowUpRight className="w-4 h-4 opacity-50" />
+                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700" />
+                <MessageCircle className="w-[18px] h-[18px] relative z-10" />
+                <span className="relative z-10">Falar com a equipe</span>
+                <ArrowUpRight className="w-4 h-4 opacity-50 relative z-10" />
               </a>
 
               <div className="mt-5 flex items-center gap-2 text-[10px] text-white/18 relative z-10" style={{ fontFamily: "'JetBrains Mono', monospace" }}>

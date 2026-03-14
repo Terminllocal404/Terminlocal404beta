@@ -9,6 +9,8 @@ import { ContactPage } from "./pages/ContactPage";
 import { CommunityPage } from "./pages/CommunityPage";
 import { RequestPage } from "./pages/RequestPage";
 import { FounderProfile } from "./pages/FounderProfile";
+import { ProjectsPage } from "./pages/ProjectsPage";
+import { FAQPage } from "./pages/FAQPage";
 
 export const router = createBrowserRouter([
   {
@@ -16,14 +18,16 @@ export const router = createBrowserRouter([
     Component: RootLayout,
     children: [
       { index: true, Component: Home },
-      { path: "termos", Component: TermsOfUse },
-      { path: "privacidade", Component: PrivacyPolicy },
       { path: "sobre", Component: AboutPage },
       { path: "servicos", Component: ServicesPage },
-      { path: "contato", Component: ContactPage },
+      { path: "projetos", Component: ProjectsPage },
       { path: "comunidade", Component: CommunityPage },
+      { path: "faq", Component: FAQPage },
+      { path: "contato", Component: ContactPage },
       { path: "solicitacao", Component: RequestPage },
       { path: "equipe/:id", Component: FounderProfile },
+      { path: "termos", Component: TermsOfUse },
+      { path: "privacidade", Component: PrivacyPolicy },
     ],
   },
 ]);

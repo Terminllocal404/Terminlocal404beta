@@ -4,15 +4,17 @@ import { ImageWithFallback } from "./figma/ImageWithFallback";
 
 const socialLinks = [
   { name: "Instagram", url: "https://www.instagram.com/terminal_4.0.4/", icon: Instagram },
-  { name: "WhatsApp", url: "https://wa.me/553291547944", icon: MessageCircle },
+  { name: "WhatsApp", url: "https://wa.me/553291547944?text=Seja%20bem-vindo!%20Faça%20o%20seu%20projeto%20conosco.", icon: MessageCircle },
   { name: "GitHub", url: "https://github.com/Terminllocal404", icon: Github },
   { name: "LinkedIn", url: "https://www.linkedin.com/posts/terminal-404_terminal404-linkedin-activity-7419888008151261184-qFpP", icon: Linkedin },
 ];
 
 const footerLinks = [
   { name: "Sobre", href: "/sobre" },
-  { name: "Soluções", href: "/servicos" },
+  { name: "Solucoes", href: "/servicos" },
+  { name: "Projetos", href: "/projetos" },
   { name: "Comunidade", href: "/comunidade" },
+  { name: "FAQ", href: "/faq" },
   { name: "Contato", href: "/contato" },
 ];
 
@@ -20,28 +22,28 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#020408] border-t border-white/[0.04] pt-12 md:pt-14 pb-8 relative overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-px bg-gradient-to-r from-transparent via-[#00E5FF]/12 to-transparent" />
+    <footer className="bg-[#020408] border-t border-white/[0.04] pt-14 md:pt-16 pb-8 relative overflow-hidden">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-px bg-gradient-to-r from-transparent via-[#00E5FF]/15 to-transparent" />
 
       <div className="max-w-6xl mx-auto px-5 sm:px-6 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 mb-8 md:mb-10">
-          {/* Brand — Logo empilhado */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 mb-10 md:mb-12">
+          {/* Brand with Logo */}
           <div className="flex flex-col items-center md:items-start">
-            <Link to="/" className="flex flex-col items-center md:items-start group mb-3">
+            <Link to="/" className="flex items-center gap-2.5 group mb-4">
               <ImageWithFallback
                 src="https://available-aquamarine-lziqbpkvhg.edgeone.app/Untitled_design_1.png"
-                alt="Terminal 404 Logo"
-                className="h-8 w-auto object-contain drop-shadow-[0_0_5px_rgba(0,229,255,0.3)] group-hover:drop-shadow-[0_0_10px_rgba(0,229,255,0.5)] transition-all duration-300"
+                alt="Terminal 404"
+                className="h-8 w-auto object-contain drop-shadow-[0_0_10px_rgba(0,229,255,0.2)]"
               />
               <span
-                className="text-[10px] font-semibold tracking-[0.2em] text-white/80 uppercase mt-1"
+                className="text-[16px] font-bold tracking-[0.15em] text-white group-hover:text-[#00E5FF] transition-colors duration-300 uppercase"
                 style={{ fontFamily: "'Space Grotesk', sans-serif" }}
               >
                 Terminal 404
               </span>
             </Link>
             <p className="text-white/18 text-[12px] text-center md:text-left max-w-[260px] leading-[1.65]">
-              Engenharia de software de alta performance e arquitetura escalável para o futuro digital.
+              Engenharia de software de alta performance e arquitetura escalavel para o futuro digital.
             </p>
           </div>
 
@@ -51,7 +53,7 @@ export function Footer() {
               className="text-white/12 text-[10px] uppercase tracking-wider mb-3"
               style={{ fontFamily: "'JetBrains Mono', monospace" }}
             >
-              Navegação
+              Navegacao
             </span>
             <div className="flex flex-wrap justify-center md:justify-start gap-x-5 gap-y-1.5">
               {footerLinks.map((link) => (
@@ -83,7 +85,7 @@ export function Footer() {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-9 h-9 rounded-lg bg-white/[0.025] border border-white/[0.05] flex items-center justify-center text-white/18 hover:text-[#00E5FF] hover:border-[#00E5FF]/15 active:scale-95 transition-all duration-300"
+                    className="w-9 h-9 rounded-lg bg-white/[0.025] border border-white/[0.05] flex items-center justify-center text-white/18 hover:text-[#00E5FF] hover:border-[#00E5FF]/15 hover:bg-[#00E5FF]/[0.04] active:scale-95 transition-all duration-300"
                     title={social.name}
                   >
                     <Icon className="w-3.5 h-3.5" />
@@ -95,12 +97,12 @@ export function Footer() {
         </div>
 
         {/* Divider */}
-        <div className="w-full h-px bg-white/[0.04] mb-5" />
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent mb-5" />
 
         {/* Bottom */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-2.5">
           <p className="text-[11px] text-white/12 text-center sm:text-left">
-            © {currentYear} Terminal 404. Todos os direitos reservados.
+            &copy; {currentYear} Terminal 404. Todos os direitos reservados.
           </p>
           <div className="flex items-center gap-4">
             <Link to="/termos" className="text-[11px] text-white/12 hover:text-[#00E5FF]/40 transition-colors">

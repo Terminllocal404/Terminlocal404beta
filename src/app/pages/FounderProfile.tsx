@@ -15,7 +15,29 @@ export function FounderProfile() {
       {/* Banner */}
       <section className="relative w-full border-b border-white/[0.04]">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(0,229,255,0.05),transparent_55%)] pointer-events-none" />
+        <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(rgba(0,229,255,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(0,229,255,0.5)_1px,transparent_1px)] bg-[size:56px_56px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_30%,#000_20%,transparent_100%)]" />
         <div className="max-w-6xl mx-auto px-5 sm:px-6 py-8 md:py-12 relative z-10">
+          {/* Brand watermark */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="flex items-center gap-2.5 mb-6"
+          >
+            <ImageWithFallback
+              src="https://available-aquamarine-lziqbpkvhg.edgeone.app/Untitled_design_1.png"
+              alt="Terminal 404"
+              className="h-6 w-auto object-contain drop-shadow-[0_0_8px_rgba(0,229,255,0.2)] opacity-40"
+            />
+            <div className="w-px h-4 bg-white/[0.08]" />
+            <span
+              className="text-[10px] text-white/15 uppercase tracking-[0.2em]"
+              style={{ fontFamily: "'JetBrains Mono', monospace" }}
+            >
+              Terminal 404
+            </span>
+          </motion.div>
+
           <Link
             to="/sobre"
             className="inline-flex items-center gap-1.5 text-white/28 hover:text-[#00E5FF] transition-colors mb-5 md:mb-7 group text-[13px]"
