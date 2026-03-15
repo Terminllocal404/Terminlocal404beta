@@ -1,19 +1,21 @@
-# Manual Profissional de Instalação e Deploy de Servidor (Versão Aprimorada)
+# Manual Completo e Definitivo de Instalação e Deploy de Servidor (DevOps & CI/CD)
 
-Este manual detalha o processo de instalação, configuração e implantação de uma aplicação em um servidor Linux Ubuntu (última versão LTS). Ele foi aprimorado para corrigir erros comuns de permissão, falta de memória (OOM), instalação de versões defasadas do Docker e inclui configuração de proxy reverso (Nginx) e SSL (HTTPS).
+Este manual é o guia definitivo e consolidado para instalação, configuração, segurança e implantação automatizada de aplicações em um servidor Linux Ubuntu (última versão LTS). Ele une boas práticas de infraestrutura, prevenção de erros (como falta de memória RAM), uso de Docker oficial, proxy reverso com Nginx, SSL grátis e automação real com Webhooks.
 
 ---
 
-## 1. Preparação inicial do servidor
+## 1. Preparação Inicial do Servidor
+
+O primeiro passo é preparar o sistema operacional, atualizá-lo e prevenir travamentos comuns durante o processo de *build* da aplicação.
 
 ### 1.1 Atualização do sistema
-Mantenha os pacotes do servidor atualizados para garantir segurança e estabilidade. Execute:
+Mantenha todos os pacotes atualizados para garantir segurança e estabilidade:
 ```bash
 sudo apt update && sudo apt upgrade -y
 ```
 
-### 1.2 Criação de Memória Swap (Prevenção de Erros de Build)
-Muitas vezes, o servidor trava ao rodar o `docker build` ou `npm install` por falta de memória RAM. Criar um arquivo Swap resolve isso:
+### 1.2 Criação de Memória Swap (Prevenção de Erros "Out of Memory")
+Muitas vezes, o servidor trava ao rodar o `docker build` ou `npm install` por falta de memória RAM. Criar um arquivo Swap (memória virtual no disco) resolve isso:
 ```bash
 sudo fallocate -l 2G /swapfile
 sudo chmod 600 /swapfile
@@ -23,42 +25,43 @@ echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 ```
 
 ### 1.3 Instalação de ferramentas essenciais
+Instale utilitários básicos que ajudarão no gerenciamento:
 ```bash
 sudo apt install git curl wget build-essential unzip htop ufw software-properties-common apt-transport-https ca-certificates -y
 ```
 
 ---
 
-## 2. Configuração básica de segurança
+## 2. Configuração de Segurança e Acesso
 
 ### 2.1 Criação de usuário para deploy
-Evite usar o usuário `root` para operações diárias.
+Evite usar o usuário `root` para operações diárias. Vamos criar um usuário específico:
 ```bash
 sudo adduser deploy
 sudo usermod -aG sudo deploy
 ```
-*A partir de agora, mude para o novo usuário:*
+*A partir de agora, mude para o novo usuário para executar os próximos passos:*
 ```bash
 su - deploy
 ```
 
-### 2.2 Configuração de SSH
-Desative o login via senha e o login direto do root.
+### 2.2 Configuração de SSH (Bloqueio do Root)
+Aumente a segurança desativando o login via senha e o login direto do root:
 ```bash
 sudo nano /etc/ssh/sshd_config
 ```
-Altere ou adicione:
+Altere ou adicione as seguintes linhas:
 ```text
 PermitRootLogin no
 PasswordAuthentication no
 ```
-Reinicie o serviço SSH:
+Reinicie o serviço SSH para aplicar:
 ```bash
 sudo systemctl restart ssh
 ```
 
 ### 2.3 Configuração do firewall (UFW)
-Habilite as portas essenciais antes de ativar o firewall para não perder o acesso.
+Habilite as portas essenciais antes de ativar o firewall para não perder o acesso ao servidor:
 ```bash
 sudo ufw allow OpenSSH
 sudo ufw allow 80/tcp
@@ -70,36 +73,39 @@ sudo ufw enable
 
 ## 3. Instalação Oficial do Docker e Docker Compose
 
-**Importante:** Evite usar o `docker.io` do repositório padrão do Ubuntu, pois costuma ser desatualizado e causar bugs no `docker compose`.
+**Importante:** Evite usar o pacote `docker.io` padrão do Ubuntu, pois ele costuma ser desatualizado e causar bugs no `docker compose`. Instalaremos direto do repositório oficial.
 
-### 3.1 Adicionar repositório oficial do Docker
+### 3.1 Adicionar repositório oficial da Docker
 ```bash
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 ```
 
-### 3.2 Instalar Docker
+### 3.2 Instalar o Docker
 ```bash
 sudo apt update
 sudo apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
 ```
 
 ### 3.3 Permissões do Docker (Evitar "Permission Denied")
-Adicione o usuário `deploy` ao grupo do Docker:
+Garanta que o Docker inicie com o servidor e permita que o usuário `deploy` o execute sem `sudo`:
 ```bash
+sudo systemctl enable docker
+sudo systemctl start docker
 sudo usermod -aG docker deploy
 ```
-**Atenção:** Para aplicar a permissão sem precisar sair do servidor, rode:
+**Atenção:** Para aplicar a permissão imediatamente sem precisar sair do servidor, rode:
 ```bash
 newgrp docker
 ```
-Teste com: `docker ps` (não deve pedir sudo nem dar erro).
+Teste com: `docker --version` e `docker compose version`.
 
 ---
 
-## 4. Estrutura de Pastas e Permissões
+## 4. Estrutura de Pastas e Ambientes
 
-Crie os diretórios e passe a propriedade para o usuário `deploy` **antes** de clonar o projeto:
+Manter um padrão de diretórios ajuda na manutenção e separa o que é teste do que é ambiente real. Crie os diretórios **antes** de clonar o projeto:
+
 ```bash
 sudo mkdir -p /var/www/projeto-production
 sudo mkdir -p /var/www/projeto-staging
@@ -107,25 +113,31 @@ sudo mkdir -p /var/www/scripts
 sudo chown -R deploy:deploy /var/www
 ```
 
+* **Staging (`projeto-staging`)**: Ambiente de testes, réplica da produção. Serve para validação técnica de novas funcionalidades antes do público ver.
+* **Production (`projeto-production`)**: Ambiente oficial da aplicação, versão estável, com acesso público.
+
 ---
 
-## 5. Configuração do GitHub no servidor
+## 5. Configuração do GitHub no Servidor
 
-### 5.1 Gerar chave SSH para o servidor
-Logado como `deploy`:
+Para clonar repositórios privados e permitir a automação sem necessidade de senhas, usaremos chaves SSH.
+
+### 5.1 Gerar chave SSH
+Logado como o usuário `deploy`, gere a chave:
 ```bash
 ssh-keygen -t ed25519 -C "deploy@server"
 ```
-Não adicione senha (passphrase) para permitir deploy automático.
+*Pressione `Enter` para todas as perguntas. Não adicione senha (passphrase) para não travar o deploy automático.*
 
 ### 5.2 Adicionar chave ao GitHub
+Exiba a chave pública:
 ```bash
 cat ~/.ssh/id_ed25519.pub
 ```
-Copie a saída e cole no seu GitHub em **Settings > SSH and GPG keys > New SSH key** (ou como Deploy Key diretamente no repositório).
+Copie a saída e cole nas configurações do seu GitHub em **Settings > SSH and GPG keys > New SSH key** (ou como Deploy Key no próprio repositório).
 
-### 5.3 Clonar o repositório
-Teste a conexão e clone (faça isso dentro da pasta correta):
+### 5.3 Clonar o repositório do projeto
+Teste a conexão e clone para a pasta de produção:
 ```bash
 ssh -T git@github.com
 cd /var/www/projeto-production
@@ -136,7 +148,7 @@ git clone git@github.com:SEU_USUARIO/SEU_REPOSITORIO.git .
 
 ## 6. Variáveis de Ambiente (.env)
 
-Nunca comite o arquivo `.env` no GitHub. Crie-o diretamente no servidor:
+Nunca comite o arquivo `.env` no GitHub por segurança. Crie-o diretamente no servidor:
 ```bash
 nano /var/www/projeto-production/.env
 ```
@@ -149,9 +161,14 @@ DATABASE_URL=mysql://root:root@database:3306/app
 
 ---
 
-## 7. Configuração de Docker Compose
+## 7. Configuração do Docker Compose
 
-Exemplo estrutural robusto (`docker-compose.yml`):
+Na pasta do projeto (`/var/www/projeto-production`), crie ou valide o arquivo de infraestrutura:
+```bash
+nano docker-compose.yml
+```
+
+**Exemplo estrutural robusto (`docker-compose.yml`):**
 ```yaml
 version: "3.9"
 
@@ -163,7 +180,7 @@ services:
     env_file:
       - .env
     ports:
-      - "127.0.0.1:3000:3000" # Exposto apenas para o localhost (Nginx fará o proxy)
+      - "127.0.0.1:3000:3000" # Exposto apenas para o localhost por segurança
     depends_on:
       - database
 
@@ -181,22 +198,27 @@ volumes:
   db_data:
 ```
 
+*Inicie os containers pela primeira vez:*
+```bash
+docker compose up -d
+```
+
 ---
 
 ## 8. Nginx e Domínio Seguro (HTTPS / SSL)
 
-Para acessar sua aplicação via domínio (ex: `api.seusite.com`) sem precisar digitar a porta `:3000`.
+Para acessar sua aplicação via domínio (ex: `seudominio.com`) de forma segura, sem precisar digitar a porta `:3000`, usaremos o Nginx como Proxy Reverso.
 
 ### 8.1 Instalar Nginx e Certbot
 ```bash
 sudo apt install nginx certbot python3-certbot-nginx -y
 ```
 
-### 8.2 Configurar Nginx como Proxy Reverso
+### 8.2 Configurar o Nginx
 ```bash
 sudo nano /etc/nginx/sites-available/projeto
 ```
-Adicione:
+Adicione a configuração de proxy:
 ```nginx
 server {
     listen 80;
@@ -226,32 +248,38 @@ sudo certbot --nginx -d seudominio.com -d www.seudominio.com
 
 ---
 
-## 9. Atualização automática (CI/CD Básico)
+## 9. Automação de Deploy (CI/CD Básico)
+
+Para que o servidor sempre reflita o código mais atual do GitHub automaticamente.
 
 ### 9.1 Script de Deploy (`deploy.sh`)
+Crie o script que executa a atualização:
 ```bash
 nano /var/www/scripts/deploy.sh
 ```
+**Conteúdo:**
 ```bash
 #!/bin/bash
 cd /var/www/projeto-production
 echo "Iniciando deploy em $(date)" >> /var/log/deploy.log
 
-# Atualiza código
+# Força atualização do código
 git reset --hard
 git pull origin main
 
-# Reconstrói os containers
+# Reconstrói os containers com o novo código
+docker compose down
 docker compose up -d --build
 
 echo "Deploy finalizado" >> /var/log/deploy.log
 ```
+Dê permissão de execução:
 ```bash
 chmod +x /var/www/scripts/deploy.sh
 ```
 
-### 9.2 Webhook do GitHub (Real)
-Para não precisar rodar o script na mão, instale o ouvinte de webhook:
+### 9.2 Ouvinte de Webhook do GitHub
+Instale o pacote para escutar os eventos do GitHub de verdade:
 ```bash
 sudo apt install webhook -y
 ```
@@ -268,20 +296,28 @@ nano /etc/webhook.conf
   }
 ]
 ```
-Inicie o serviço (porta padrão 9000):
+Inicie o serviço (ele rodará na porta 9000):
 ```bash
 webhook -hooks /etc/webhook.conf -verbose &
 ```
-No GitHub, vá em **Settings > Webhooks**:
+No GitHub, vá em **Settings > Webhooks > Add webhook**:
 - **Payload URL:** `http://IP_DO_SERVIDOR:9000/hooks/deploy-projeto`
 - **Content type:** `application/json`
 
 ---
 
-## 10. Comandos Úteis de Manutenção
+## 10. Manutenção e Comandos Úteis
 
-- **Verificar uso de recursos:** `htop` ou `docker stats`
-- **Ver logs da aplicação:** `docker logs -f app_server`
+Comandos de rotina para administrar seu servidor no dia a dia:
+
+- **Atualizar código manualmente:** `cd /var/www/projeto-production && git pull`
+- **Reiniciar containers:** `docker compose restart`
+- **Ver logs da aplicação (em tempo real):** `docker logs -f app_server`
 - **Acessar o terminal do container:** `docker exec -it app_server /bin/sh`
-- **Limpar Docker (remover imagens não usadas):** `docker system prune -a -f`
-- **Ver logs do Nginx (erros de proxy):** `sudo tail -f /var/log/nginx/error.log`
+- **Parar containers:** `docker compose down`
+- **Limpar lixo do Docker (liberar espaço em disco):** `docker system prune -a -f`
+- **Verificar uso de recursos (RAM/CPU):** `htop` ou `docker stats`
+- **Ver logs de erro do Nginx:** `sudo tail -f /var/log/nginx/error.log`
+
+---
+*Fim do Manual. Seu servidor agora é uma infraestrutura robusta, segura, automatizada e pronta para escalar na produção!*
